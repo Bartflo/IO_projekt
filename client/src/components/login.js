@@ -1,12 +1,20 @@
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import '.././App.css';
 
 
 function Login()
 {
     return( 
-        <div className="test">
+        <div className="login-container">
         <TextField id="outlined-basic" label="Login" variant="outlined"/>
-        <TextField id="outlined-password-input" label="Password" type="password"/>
+        <TextField sx={{m:2}} id="outlined-password-input" label="Hasło" type="password"/>
+        <Button variant="contained">
+            Zaloguj się
+        </Button>
+        <p className="login-to-register">
+            Nie masz konta? Rejestracja
+        </p>
         </div>
     );
 }
