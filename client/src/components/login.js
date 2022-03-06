@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import '.././App.css';
-
+import {Link} from "react-router-dom";
 
 function Login()
 {
@@ -13,7 +13,7 @@ function Login()
             Zaloguj się
         </Button>
         <p className="login-to-register">
-            Nie masz konta? Rejestracja
+            Nie masz konta? <Link to="/register">Rejestracja</Link>
         </p>
         </div>
     );
