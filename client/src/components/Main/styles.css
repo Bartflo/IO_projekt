@@ -31,3 +31,13 @@
 	transition: all 0.3s ease-in-out;
 	color:white;
 }
+.form_questions
+{
+	display:flex;
+	flex-direction: column;
+}
+
+.form_questions h2
+{
+	color:black;
+}

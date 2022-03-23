@@ -3,7 +3,9 @@ const { Question } = require("../models/question");
 
 router.post("/", async (req, res) => {
 	const content = req.body.content;
-    const question = new Question({content: content});
+    const answer = req.body.answer;
+    const correctAnswer = req.body.correctAnswer;
+    const question = new Question({content: content,answer:answer,correctAnswer:correctAnswer});
     try {
 		/*const question = await Question.findOne({ content: req.body.content });
 		if (question){
@@ -18,6 +20,8 @@ router.post("/", async (req, res) => {
         await question.save();
            
         } catch (error) {
+        console.error(error);
+        console.log(req.body);
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });
