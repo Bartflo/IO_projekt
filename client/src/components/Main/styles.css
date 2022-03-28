@@ -1,7 +1,7 @@
 .navbar {
 	width: 100%;
 	height: 70px;
-	background-color: #3bb19b;
+	background-color: #12a5ee;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -16,21 +16,28 @@
 .btn_logout {
 	border: none;
 	outline: none;
-	padding: 12px 0;
+	padding: 6px 10px;
 	background-color: white;
 	border-radius: 20px;
-	width: 120px;
+	width: 150px;
 	font-weight: bold;
 	font-size: 14px;
 	cursor: pointer;
 	margin-right: 20px;
+	text-decoration: none;
+	color:black;
 }
-.btn_logout:hover
+ .btn_logout:hover
 {
-	background-color:grey;
-	transition: all 0.3s ease-in-out;
-	color:white;
+	background-color:rgb(140, 148, 148);
+	transition-timing-function: ease-in;
+
+
+	transition:0.3s ease-out; 	
+	color:white; 
 }
+
+
 .form_questions
 {
 	display:flex;

@@ -57,7 +57,8 @@ const Questions = () => {
 			
 			<nav className="navbar">
 				<h1>Aplikacja</h1>
-				<button className="btn_logout">Dodaj pytanie zamknięte</button>
+				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
+				<Link to="/questions" className="btn_logout">Dodaj pytanie kolejność</Link>
 				<Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
