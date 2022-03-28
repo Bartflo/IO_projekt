@@ -18,7 +18,8 @@ const Main = () => {
 			
 			<nav className="navbar">
 				<h1>Aplikacja</h1>
-				<Link to="/questions" className="btn_logout">Dodaj pytanie</Link>
+				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
+				<Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
 				</button>

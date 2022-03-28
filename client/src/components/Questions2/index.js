@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from "react";
 import axios from "axios";
-
+import {Link} from "react-router-dom";
 const Questions2 = () => {
 	const [data, setData] = useState({
 		content: "",
@@ -55,7 +55,7 @@ const Questions2 = () => {
 			
 			<nav className="navbar">
 				<h1>Aplikacja</h1>
-				<button className="btn_logout">Dodaj pytanie zamknięte</button>
+				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
                 <button className="btn_logout">Dodaj pytanie wypełnianie</button>
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
