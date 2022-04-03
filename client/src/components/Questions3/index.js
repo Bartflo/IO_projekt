@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 const Questions3 = () => {
 	const [data, setData] = useState({
 		content: "",
-		
+		correctAnswer: "",
 	});
 	
 	
@@ -17,18 +17,19 @@ const Questions3 = () => {
 	};
 	
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
+		setData(data=>({ ...data, correctAnswer:input.value}));
 	};
  
-	const [questions, setQuestions] = useState("");
+	const [questions, setQuestions] = useState([]);
 	
 	
 	
 	async function showData(){
 		axios.get("http://localhost:8080/api/questions3")
 			.then(res => {
-				console.log(res.data[0].content);
-				setQuestions(res.data);
+				const result = Array.from(res.data).map(element => element.content);
+				console.log(result);
+				setQuestions(result);
 			})
 			.catch(err => {
 				console.log(err);
@@ -49,13 +50,6 @@ const Questions3 = () => {
 	// 			console.log(err)
 	// 		})
 	// }
-	
-
-
-
-
-
-	
 						
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -64,7 +58,7 @@ const Questions3 = () => {
 			const { data: res } = await axios.post(url, {
 				content:data.content,
 			});
-			window.location.reload(false);
+			//window.location.reload(false);
 			console.log(res.message);
 		} catch (error) {
 			if (
@@ -76,7 +70,7 @@ const Questions3 = () => {
 			}
 		}
 	};
-	
+
 	
 	
 	
@@ -98,10 +92,11 @@ const Questions3 = () => {
 					Wyloguj
 				</button>
 			</nav>
-			<button onClick={showData}>Wyswietl</button>
-		
-			
-			<div className="centered">
+			{/* <button onClick={showData}>Wyswietl</button> */}
+
+
+
+		  <div className="centered">
 			
 			<form onSubmit={handleSubmit} className="form_questions"> 
 			
@@ -115,13 +110,24 @@ const Questions3 = () => {
 					  />
 				
 				
-				<button type="submit" className="btn_login_register">
+				<button type="submit" className="btn_login_register" onClick={showData}>
 				  Dodaj
 				  </button>
-				
+
 			 </form>
-			 
-			
+			 <div>
+        	{Array.from(questions).map((subArray, index) => {
+          return (
+            <div key={index}>
+              {subArray.map((subitem, i) => {
+                return (
+                    <button key={i} value={subitem} onClick={handleCorrectAnswerChange}>{subitem}</button>
+                );
+              })}
+            </div>
+          );
+        		})}
+     	 </div>
 		
 		</div>
 		</div>

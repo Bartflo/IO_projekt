@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const question3Schema = new mongoose.Schema({
 	content: [{type:String}],
-	
+	correctAnswer : {Type:String},
 
     
 });
