@@ -7,6 +7,7 @@ const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const questionRoutes = require("./routes/questions");
 const question2Routes = require("./routes/questions2");
+const question3Routes = require("./routes/questions3");
 // database connection
 connection();
 
@@ -19,6 +20,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/questions2", question2Routes);
+app.use("/api/questions3", question3Routes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

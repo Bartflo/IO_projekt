@@ -7,10 +7,16 @@
 	justify-content: space-between;
 }
 
-.navbar h1 {
+.logo {
 	color: white;
 	font-size: 25px;
 	margin-left: 20px;
+	text-decoration: none;
+}
+
+.logo:hover
+{
+	color: #d1c9c7;
 }
 
 .btn_logout {

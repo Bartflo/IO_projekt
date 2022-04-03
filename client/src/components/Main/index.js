@@ -17,9 +17,11 @@ const Main = () => {
 		<div className="main_container">
 			
 			<nav className="navbar">
-				<h1>Aplikacja</h1>
+				<Link to="/" className="logo">Aplikacja</Link>
 				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+				<Link to="/questions3" className="btn_logout">Dodaj pytanie kolejność</Link>
+                <Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+				
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
 				</button>

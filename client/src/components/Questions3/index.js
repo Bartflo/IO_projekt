@@ -1,13 +1,15 @@
 import React from 'react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-const Questions2 = () => {
+const Questions3 = () => {
 	const [data, setData] = useState({
 		content: "",
-		//correctAnswer: "",
+		
 	});
 	
+	
+
     const [error, setError] = useState("");
 	
     const handleQuestionChange = ({ currentTarget: input  }) => {
@@ -18,15 +20,49 @@ const Questions2 = () => {
 		setData({ ...data, [input.name]: input.value });
 	};
  
+	const [questions, setQuestions] = useState("");
 	
 	
+	
+	async function showData(){
+		axios.get("http://localhost:8080/api/questions3")
+			.then(res => {
+				console.log(res.data[0].content);
+				setQuestions(res.data);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	
+
+	
+
+
+	// const getData = () => {
+	// 	axios
+	// 		.get("http://localhost:8080/api/questions3")
+	// 		.then(res => {
+	// 			console.log(res)
+	// 		}).catch(err => {
+	// 			console.log(err)
+	// 		})
+	// }
+	
+
+
+
+
+
+	
+						
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/questions2";
+			const url = "http://localhost:8080/api/questions3";
 			const { data: res } = await axios.post(url, {
 				content:data.content,
-				//correctAnswer:data.correctAnswer, 
 			});
 			window.location.reload(false);
 			console.log(res.message);
@@ -62,10 +98,14 @@ const Questions2 = () => {
 					Wyloguj
 				</button>
 			</nav>
+			<button onClick={showData}>Wyswietl</button>
+		
+			
 			<div className="centered">
 			
 			<form onSubmit={handleSubmit} className="form_questions"> 
-			<h2>Wybierz słowo do uzupełnienia</h2>
+			
+			<h2>Wpisz pytanie</h2>
 			  <input className="login_register_input"
 					  	type="text"
 					  	placeholder="Treść pytania"
@@ -74,13 +114,20 @@ const Questions2 = () => {
 						required
 					  />
 				
+				
 				<button type="submit" className="btn_login_register">
 				  Dodaj
 				  </button>
+				
 			 </form>
+			 
+			
+		
 		</div>
 		</div>
 	);
 };
 
-export default Questions2;
+export default Questions3;
+
+
