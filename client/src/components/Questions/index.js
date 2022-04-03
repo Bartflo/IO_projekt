@@ -9,6 +9,9 @@ const Questions = () => {
 		correctAnswer:new Map,
 	});
 	const [error, setError] = useState("");
+	
+	
+
 	const handleQuestionChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data, content:input.value }));
 	};	
@@ -17,9 +20,29 @@ const Questions = () => {
 		setData(data=>({ ...data,  correctAnswer:data.correctAnswer.set(input.name,input.value)}));
 	};
 
-	const handleChange = ({ currentTarget: input }) => {
-		setData(data=>({ ...data,  answer:data.answer.set(input.name,input.value)}));
+
+	const [questions, setQuestions] = useState([
+		{answer: ""},
+		{answer: ""},
+		{answer: ""},
+	]);
+	
+	const handleAnswerAdd = () => {
+		setQuestions(questions => [...questions, {answer: ""}]);
 	};
+	
+	const handleAnswerRemove = (index) => {
+		const list = [...questions];
+		list.splice(index, 1);
+		setQuestions(list);
+	};
+
+	const handleAnswerChange = (e, index) => {
+		const {name, value} = e.target
+		const list = [...questions];
+		list[index][name] = value;
+		setQuestions(list);
+	}
 	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -27,10 +50,10 @@ const Questions = () => {
 			const url = "http://localhost:8080/api/questions";
 			const { data: res } = await axios.post(url, {
 				content:data.content,
-				answer:[...data.answer.values()],
+				answer:[...questions.map(question => question.answer)],
 				correctAnswer:[...data.correctAnswer.values()],
 			});
-			window.location.reload(false);
+			window.location.reload(false);	
 			console.log(res.message);
 		} catch (error) {
 			if (
@@ -66,43 +89,45 @@ const Questions = () => {
 			</nav>
 			<div className="centered">
 			
+			{console.log(questions)}
 			<form onSubmit={handleSubmit} className="form_questions"> 
 			<h2>Zaznacz prawidłowa odpowiedz</h2>
 			  <input className="login_register_input"
 					  	type="text"
-					  	placeholder="Treść pytania"
+					  	placeholder="Treśc pytania"
 					  	name="content"
 	  					onChange={handleQuestionChange}
 						required
 					  />
-				<div className="answer">
+				{questions.map((question , index) => (
+				<div key={index}>
 				<input className="login_register_input"
 					  	type="text"
-					  	placeholder="Odpowiedz 1"
-					  	name="answer1"
-	  					onChange={handleChange}
+					  	placeholder="Odpowiedz"
+					  	name="answer"
+						value={question.answer}
+						onChange={(e) => handleAnswerChange(e, index)}
 						required
+
 					  />
-				<input type="checkbox" name="correctAnswer0" value="0" onChange={handleCorrectAnswerChange}/>
+					<input type="checkbox" value={index} onChange={handleCorrectAnswerChange} name={index}></input>
+					{questions.length -1 === index &&
+					<button className="btn_add" type="submit" onClick={handleAnswerAdd}>Dodaj</button>}
+				
+				{questions.length > 1 && (
+				<button className="btn_remove"
+				type="button"
+				onClick={() => handleAnswerRemove(index)}>
+				Usuń
+				</button>
+				
+				)}
+				
 				</div>
-				<div className="answer">
-				<input className="login_register_input"
-					  	type="text"
-					  	placeholder="Odpowiedz 2"
-					  	name="answer2"
-	  					onChange={handleChange}
-					  />
-				<input type="checkbox" name="correctAnswer1" value="1" onChange={handleCorrectAnswerChange}/>
-				</div>
-				<div className="answer">
-				<input className="login_register_input"
-					  	type="text"
-					  	placeholder="Odpowiedz 3"
-					  	name="answer3"
-	  					onChange={handleChange}
-					  />
-				<input type="checkbox" name="correctAnswer2" value="2" onChange={handleCorrectAnswerChange}/>
-				</div>
+				
+						
+				
+				))}
 				<button type="submit" className="btn_login_register">
 				  Dodaj
 				  </button>
@@ -111,6 +136,7 @@ const Questions = () => {
 		</div>
 	);
 };
+
 
 export default Questions;
 
