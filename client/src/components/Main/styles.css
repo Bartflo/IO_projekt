@@ -54,3 +54,48 @@
 {
 	color:black;
 }
+
+.correctAnswer_container
+{
+	margin: 4px;
+	background-color: #567eed;
+	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+	border: 1px solid #fff;
+	overflow: hidden;
+	float: left;
+}
+
+.correctAnswer_container label
+{
+	float: left; line-height: 3.0em;
+	width: 8.0em; height: 3.0em;
+}
+
+.correctAnswer_container span
+{
+	text-align: center;
+	padding: 3px 0;
+	display: block;
+}
+
+.correctAnswer_container input
+{
+	position: absolute;
+	display: none;
+	color: #fff !important;
+}
+
+.correctAnswer_container label input + span
+{
+	color: #fff;
+}
+
+.correctAnswer_container input:checked + span {
+    color: #ffffff;
+    text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+}
+.action input:checked + span
+{
+	background-color: #0aee56;
+}

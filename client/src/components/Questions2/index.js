@@ -56,8 +56,8 @@ const Questions2 = () => {
 			<nav className="navbar">
 			<Link to="/" className="logo">Aplikacja</Link>
 				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions3" className="btn_logout">Dodaj pytanie kolejność</Link>
-                <Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
 				</button>
@@ -65,7 +65,7 @@ const Questions2 = () => {
 			<div className="centered">
 			
 			<form onSubmit={handleSubmit} className="form_questions"> 
-			<h2>Wybierz słowo do uzupełnienia</h2>
+			<h2>Wpisz zapytanie</h2>
 			  <input className="login_register_input"
 					  	type="text"
 					  	placeholder="Treść pytania"

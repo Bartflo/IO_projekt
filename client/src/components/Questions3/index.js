@@ -4,8 +4,8 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 const Questions3 = () => {
 	const [data, setData] = useState({
-		content: "",
-		correctAnswer: "",
+		content: [],
+		correctAnswer: new Map,
 	});
 	
 	
@@ -17,7 +17,7 @@ const Questions3 = () => {
 	};
 	
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
-		setData(data=>({ ...data, correctAnswer:input.value}));
+		setData(data=>({ ...data,  correctAnswer:data.correctAnswer.set(input.name,input.value)}));
 	};
  
 	const [questions, setQuestions] = useState([]);
@@ -57,6 +57,7 @@ const Questions3 = () => {
 			const url = "http://localhost:8080/api/questions3";
 			const { data: res } = await axios.post(url, {
 				content:data.content,
+				correctAnswer:[...data.correctAnswer.values()],
 			});
 			//window.location.reload(false);
 			console.log(res.message);
@@ -86,8 +87,8 @@ const Questions3 = () => {
 			<nav className="navbar">
 			<Link to="/" className="logo">Aplikacja</Link>
 				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions3" className="btn_logout">Dodaj pytanie kolejność</Link>
-                <Link to="/questions2" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
 				<button className="btn_logout" onClick={handleLogout}>
 					Wyloguj
 				</button>
@@ -100,7 +101,7 @@ const Questions3 = () => {
 			
 			<form onSubmit={handleSubmit} className="form_questions"> 
 			
-			<h2>Wpisz pytanie</h2>
+			<h2>Wpisz pytanie do uzupełnienia</h2>
 			  <input className="login_register_input"
 					  	type="text"
 					  	placeholder="Treść pytania"
@@ -109,31 +110,40 @@ const Questions3 = () => {
 						required
 					  />
 				
-				
-				<button type="submit" className="btn_login_register" onClick={showData}>
-				  Dodaj
-				  </button>
-
-			 </form>
+				<button onClick={showData}>wyswietl</button>
 			 <div>
         	{Array.from(questions).map((subArray, index) => {
           return (
             <div key={index}>
               {subArray.map((subitem, i) => {
                 return (
-                    <button key={i} value={subitem} onClick={handleCorrectAnswerChange}>{subitem}</button>
-                );
+					<div key={i} className="correctAnswer_container action">
+						<label>
+                    	<input type="checkbox" key={i} value={subitem} name={subitem} onChange={handleCorrectAnswerChange}/><span>{subitem}</span>
+						</label>
+					</div>
+				);
               })}
             </div>
           );
         		})}
      	 </div>
+				<button type="submit" className="btn_login_register">
+				  Dodaj
+				  </button>
+
+			 </form>
+
 		
 		</div>
 		</div>
 	);
 };
 
+/*
+				const result = Array.from(res.data).map(element => element.content);
+				console.log(result);
+				setQuestions(result);*/
 export default Questions3;
 
 
