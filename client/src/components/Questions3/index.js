@@ -19,23 +19,7 @@ const Questions3 = () => {
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data,  correctAnswer:data.correctAnswer.set(input.name,input.value)}));
 	};
- 
-	const [questions, setQuestions] = useState([]);
-	
-	
-	
-	async function showData(){
-		axios.get("http://localhost:8080/api/questions3")
-			.then(res => {
-				const result = Array.from(res.data).map(element => element.content);
-				console.log(result);
-				setQuestions(result);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
-
+ 	
 						
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -45,7 +29,7 @@ const Questions3 = () => {
 				content:data.content,
 				correctAnswer:[...data.correctAnswer.values()],
 			});
-			//window.location.reload(false);
+			window.location.reload(false);
 			console.log(res.message);
 		} catch (error) {
 			if (
@@ -94,13 +78,17 @@ const Questions3 = () => {
 	  					onChange={handleQuestionChange}
 						required
 					  />
-				
-				<button onClick={showData}>wyswietl</button>
 			 <div>
-        	{Array.from(questions).map((subArray, index) => {
+        	{Array.from(data.content).map((subArray, index) => {
           return (
             <div key={index}>
-              {subArray.map((subitem, i) => {
+				{console.log(data.content)}
+					<div key={index} className="correctAnswer_container action">
+						<label>
+							<input type="checkbox" key={index} value={data.content[index]} name={data.content[index]} onChange={handleCorrectAnswerChange}/><span>{data.content[index]}</span>
+						</label>
+					</div>
+              {/* {Array.from(subArray).map((subitem, i) => {
                 return (
 					<div key={i} className="correctAnswer_container action">
 						<label>
@@ -108,7 +96,7 @@ const Questions3 = () => {
 						</label>
 					</div>
 				);
-              })}
+              })} */}
             </div>
           );
         		})}
