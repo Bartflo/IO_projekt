@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 const Questions2 = () => {
 	const [data, setData] = useState({
 		content: "",
-		//correctAnswer: "",
 	});
 	
     const [error, setError] = useState("");
@@ -14,11 +13,7 @@ const Questions2 = () => {
 		setData(data=>({ ...data, content:input.value.split(" ") }));
 	};
 	
-	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
-	};
  
-	
 	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -26,7 +21,6 @@ const Questions2 = () => {
 			const url = "http://localhost:8080/api/questions2";
 			const { data: res } = await axios.post(url, {
 				content:data.content,
-				//correctAnswer:data.correctAnswer, 
 			});
 			window.location.reload(false);
 			console.log(res.message);
@@ -75,7 +69,7 @@ const Questions2 = () => {
 					  />
 				
 				<button type="submit" className="btn_login_register">
-				  Dodaj
+				  Dodaj pytanie do bazy
 				  </button>
 			 </form>
 		</div>

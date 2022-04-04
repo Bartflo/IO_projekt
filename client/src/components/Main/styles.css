@@ -99,3 +99,30 @@
 {
 	background-color: #0aee56;
 }
+
+.btn_add
+{
+	background-color: #0aee56;
+	height: 26px;
+	width: 26px;
+	font-size:1.2rem;
+	margin-left:1rem;
+	border-radius: 50%;
+	border-style: none;
+}
+.btn_remove
+{
+	background-color: #ff6464;
+	margin-left:1rem;
+	height: 26px;
+	width: 26px;
+	font-size:1.2rem;
+	border-radius: 50%;
+	border-style: none;
+}
+
+.answer_chbox
+{
+	height: 20px;
+	width:20px;
+}

@@ -36,20 +36,6 @@ const Questions3 = () => {
 			});
 	};
 
-	
-
-	
-
-
-	// const getData = () => {
-	// 	axios
-	// 		.get("http://localhost:8080/api/questions3")
-	// 		.then(res => {
-	// 			console.log(res)
-	// 		}).catch(err => {
-	// 			console.log(err)
-	// 		})
-	// }
 						
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -93,7 +79,6 @@ const Questions3 = () => {
 					Wyloguj
 				</button>
 			</nav>
-			{/* <button onClick={showData}>Wyswietl</button> */}
 
 
 
@@ -129,7 +114,7 @@ const Questions3 = () => {
         		})}
      	 </div>
 				<button type="submit" className="btn_login_register">
-				  Dodaj
+				  Dodaj pytanie do bazy
 				  </button>
 
 			 </form>
@@ -140,10 +125,6 @@ const Questions3 = () => {
 	);
 };
 
-/*
-				const result = Array.from(res.data).map(element => element.content);
-				console.log(result);
-				setQuestions(result);*/
 export default Questions3;
 
 
