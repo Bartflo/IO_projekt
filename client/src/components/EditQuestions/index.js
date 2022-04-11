@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import axios from "axios";
  
 export default function Edit() {
  const [form, setForm] = useState({
    content: "",
    answer: "",
    correctAnswer: "",
-   records: [],
+
  });
  const params = useParams();
  const navigate = useNavigate();
  
+ const [questions, setQuestions] = useState([]);
+
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
@@ -44,11 +47,30 @@ export default function Edit() {
    });
  }
  
+ async function showForm(){
+  axios.get(`http://localhost:8080/api/recordlist/${params.id.toString()}`)
+      .then(res => {
+          const result = Array.from(res.data).map(element => {
+              return {
+                  id: element._id,
+                  content: element.content,
+                  answer: element.answer,
+                  correctAnswer: element.correctAnswer,
+                  }
+                  });
+          console.log(result);
+          setQuestions(result);
+      })
+      .catch(err => {
+          console.log(err);
+      });
+};
+
+
 //handle form change
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setForm({ [name]: value });
-    }
+  const handleQuestionChange = ({ currentTarget: input }) => {
+  setForm(form=>({ ...form, content:input.value }));
+  };	
 
     //handle form submit
     function handleSubmit(event) {
@@ -58,7 +80,7 @@ export default function Edit() {
         const answer = form.answer;
         const correctAnswer = form.correctAnswer;
         const data = { id, content, answer, correctAnswer};
-        const url = `http://localhost:8080/api/recordlist/${id}`;
+        const url = `http://localhost:8080/api/recordlist/update/${id}`;
         const options = {
             method: "PUT",
             headers: {
@@ -118,58 +140,13 @@ export default function Edit() {
            className="form-control"
            id="content"
            value={form.content}
-           onChange={handleChange}
+           onChange={handleQuestionChange}
          />
        </div>
-       <div className="form-group">
-         <label htmlFor="position">Odpowiedzi: </label>
-         <input
-           type="text"
-           className="form-control"
-           id="answer"
-           value={form.answer}
-           onChange={(e) => updateForm({ position: e.target.value })}
-         />
-       </div>
-       <div className="form-group">
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionIntern"
-             value="Intern"
-             checked={form.correctAnswer === 1}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionIntern" className="form-check-label">1</label>
-         </div>
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionJunior"
-             value="Junior"
-             checked={form.correctAnswer === 2}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionJunior" className="form-check-label">2</label>
-         </div>
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionSenior"
-             value="Senior"
-             checked={form.correctAnswer === 3}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionSenior" className="form-check-label">3</label>
-       </div>
-       </div>
-       <br />
+      
+      
+      
+
  
        <div className="form-group">
          <input
@@ -179,6 +156,26 @@ export default function Edit() {
          />
        </div>
      </form>
+     <button onClick={showForm}>wyswietl</button>
+      
+      {Array.from(form).map((subArray, index) => {
+        return(
+          <div key={index}>
+            {subArray.map((subItem,i) => {
+              return(
+                <div key={i}>
+                  <input type="text"
+                  key={i}
+                  name={subItem.name}
+                  onChange={updateForm}>
+
+                  </input>
+                </div>
+              )
+            })}
+          </div>
+        )
+      })}
    </div>
  );
 }
