@@ -81,7 +81,7 @@ const Questions3 = () => {
 			 <div>
         	{Array.from(data.content).map((subArray, index) => {
           return (
-            <div key={index}>
+            <div key={index} className="showing_buttons">
 				{console.log(data.content)}
 					<div key={index} className="correctAnswer_container action">
 						<label>

@@ -55,6 +55,12 @@
 	color:black;
 }
 
+.showing_buttons
+{
+	max-width: 1200px;
+	min-width:850px;
+}
+
 .correctAnswer_container
 {
 	margin: 4px;

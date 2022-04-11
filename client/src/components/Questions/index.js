@@ -43,6 +43,29 @@ const Questions = () => {
 		list[index][name] = value;
 		setQuestions(list);
 	}
+
+	const [allquestions, setallQuestions] = useState([]);
+
+	async function showData(){
+		axios.get("http://localhost:8080/api/edit_questions")
+			.then(res => {
+				const result = Array.from(res.data).map(item => {
+					return {
+						id: item._id,
+						content: item.content,
+						answer: item.answer,
+						correctAnswer: item.correctAnswer,
+						}
+						})
+
+				console.log(result);
+				setallQuestions(result);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
 	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -89,7 +112,7 @@ const Questions = () => {
 			</nav>
 			<div className="centered">
 			
-			{console.log(questions)}
+			{/* {console.log(questions)} */}
 			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
 			<h2>Zaznacz prawidłowa odpowiedz</h2>
 			  <input className="login_register_input"
@@ -132,7 +155,18 @@ const Questions = () => {
 				  Dodaj pytanie do bazy
 				  </button>
 			 </form>
+
+
 		</div>
+		{/* <button onClick={showData}>test</button>
+			
+			{Array.from(allquestions).map(item => (
+				<div key={item.id}>
+					<p>Treść pytania: {item.content}</p>
+					<p>Odpowiedz :{item.answer}</p>
+					<p>Poprawne odpowiedzi: {item.correctAnswer}</p>
+				</div>
+			))} */}
 		</div>
 	);
 };
