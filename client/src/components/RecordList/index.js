@@ -44,7 +44,7 @@ export default function RecordList() {
  
  // This method will delete a record
  async function deleteRecord(id) {
-   await fetch(`http://localhost:5000/api/questions/${id}`, {
+   await fetch(`http://localhost:8080/api/recordlist/delete/${id}`, {
      method: "DELETE"
    });
  

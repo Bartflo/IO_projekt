@@ -49,6 +49,20 @@ router.put("/update/:id", async (req, res) => {
     }
 });
 
+router.delete("/delete/:id", async (req, res) => {
+    try {
+        const question = await Question.findById(req.params.id);
+        if (!question) {
+            return res.status(404).send({ message: "Question not found" });
+        }
+        await Question.findByIdAndDelete(req.params.id);
+        res.send({ message: "Question deleted" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+});
+
 
 
 module.exports = router;
