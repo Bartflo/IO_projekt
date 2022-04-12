@@ -8,9 +8,9 @@ cd server/ && npm install
 
 ## Uruchomienie servera(back-end)
 ```
-cd client/ && node server.js
+cd server/ && npm sttart
 ```
 ## Uruchomienie klienta(front-end)
 ```
-cd client && npm start
+cd client/ && npm start
 ```
