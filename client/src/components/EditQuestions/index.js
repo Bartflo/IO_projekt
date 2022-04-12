@@ -5,8 +5,8 @@ import axios from "axios";
 export default function Edit() {
  const [form, setForm] = useState({
    content: "",
-   answer: "",
-   correctAnswer: "",
+   answer: new Map,
+   correctAnswer: new Map,
 
  });
  const params = useParams();
@@ -28,7 +28,7 @@ export default function Edit() {
      const record = await response.json();
      if (!record) {
        window.alert(`Record with id ${id} not found`);
-       navigate("/");
+       navigate("/recordlist");
        return;
      }
  
@@ -58,12 +58,28 @@ export default function Edit() {
                   correctAnswer: element.correctAnswer,
                   }
                   });
-          console.log(result);
+          console.log(form);
           setQuestions(result);
       })
       .catch(err => {
           console.log(err);
       });
+};
+
+//this method will show input fields for the user to edit
+function showInputFields(){
+  return questions.map(question => {
+    return (
+      <div key={question.id}>
+        <label>Question:</label>
+        <input type="text" value={question.content} onChange={(e) => updateForm({ content: e.target.value })} />
+        <label>Answer:</label>
+        <input type="text" value={question.answer} onChange={(e) => updateForm({ answer: e.target.value })} />
+        <label>Correct Answer:</label>
+        <input type="text" value={question.correctAnswer} onChange={(e) => updateForm({ correctAnswer: e.target.value })} />
+      </div>
+    );
+  });
 };
 
 
@@ -97,7 +113,7 @@ export default function Edit() {
             })
             .then((data) => {
                 window.alert(`Record with id ${id} updated`);
-                navigate("/");
+                navigate("/recordlist");
             })
             .catch((err) => {
                 window.alert(`An error has occurred: ${err.message}`);
@@ -123,7 +139,7 @@ export default function Edit() {
      },
    });
  
-   navigate("/");
+   navigate("/recordlist");
  }
 
     
@@ -145,7 +161,6 @@ export default function Edit() {
        </div>
       
       
-      
 
  
        <div className="form-group">
@@ -156,9 +171,25 @@ export default function Edit() {
          />
        </div>
      </form>
-     <button onClick={showForm}>wyswietl</button>
-      
-      {Array.from(form).map((subArray, index) => {
+
+
+      {/* {Array.from(form).map(element => {
+          
+          return (
+
+            <div>
+              <h3>{element.content}</h3>
+              <h3>{element.answer}</h3>
+              <h3>{element.correctAnswer}</h3>
+            </div>
+          );
+      })} */}
+
+
+
+
+      {/* {Array.from(form).map((subArray, index) => {
+        console.log(form);
         return(
           <div key={index}>
             {subArray.map((subItem,i) => {
@@ -175,7 +206,7 @@ export default function Edit() {
             })}
           </div>
         )
-      })}
+      })} */}
    </div>
  );
 }

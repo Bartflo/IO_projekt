@@ -9,12 +9,14 @@ import Questions2 from "./components/Questions2/index";
 import Questions3 from "./components/Questions3/index";
 import RecordList from "./components/RecordList/index";
 import EditQuestions from "./components/EditQuestions/index";
-
+import Navbar from "./components/Navbar/index";
 
 function App() {
 	const user = localStorage.getItem("token");
 
 	return (
+		<div>
+		{user && <Navbar/>}
 		<Routes>
 			{user && <Route path="/" exact element={<Main />} />}
 			{user && <Route path="/questions" exact element={<Questions/>}/>}
@@ -30,6 +32,7 @@ function App() {
 			<Route path="/questions3" element={<Navigate replace to="/login" />} />
 			<Route path="/recordlist" element={<Navigate replace to="/login" />} />
 		</Routes>
+		</div>
 	);
 }
 

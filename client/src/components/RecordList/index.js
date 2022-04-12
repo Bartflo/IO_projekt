@@ -5,10 +5,19 @@ const Record = (props) => (
  <tr>
    <td>{props.record.content}</td>
    {/* <td>{props.record.answer}</td> */}
-   <td>{props.record.correctAnswer}</td>
+    <td>
+   {Array.from(props.record.answer).map((answer, index) => (
+      <p key={index}>{answer}</p>
+    ))}
+    </td>
+    {/* {props.record.correctAnswer} */}
    <td>
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
-     <button className="btn btn-link"
+     {Array.from(props.record.correctAnswer).map((correctAnswer,index)=>
+     <p key={index}>{props.record.answer[correctAnswer]}</p>)}
+   </td>
+   <td>
+     <Link className="btn_edit" to={`/edit/${props.record._id}`}>Edit</Link> 
+     <button className="btn_delete_answer"
        onClick={() => {
          props.deleteRecord(props.record._id);
        }}
@@ -16,6 +25,7 @@ const Record = (props) => (
        Delete
      </button>
    </td>
+   
  </tr>
 );
  
@@ -74,22 +84,11 @@ export default function RecordList() {
  return (
    
    <div>
-     			<nav className="navbar">
-			<Link to="/" className="logo">Aplikacja</Link>
-			<Link to="/recordlist" className="btn_logout">Lista rekordków</Link>
-				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
-                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
-				<button className="btn_logout" onClick={handleLogout}>
-					Wyloguj
-				</button>
-			</nav>
-     <h3>Record List</h3>
-     <table className="table table-striped" style={{ marginTop: 20 }}>
+     <table className="table">
        <thead>
          <tr>
            <th>Treść pytania</th>
-           {/* <th>Odpowiedzi</th> */}
+           <th>Odpowiedzi</th>
            <th>Poprawne odpowiedzi</th>
            <th>Akcja</th>
          </tr>
