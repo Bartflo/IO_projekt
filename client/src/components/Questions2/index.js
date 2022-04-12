@@ -36,14 +36,6 @@ const Questions2 = () => {
 	};
 	
 	
-	
-	
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
-	};
-
-	
 	return (
 		<div className="main_container">
 

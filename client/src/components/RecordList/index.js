@@ -75,11 +75,6 @@ export default function RecordList() {
    });
  }
 
- const handleLogout = () => {
-  localStorage.removeItem("token");
-  window.location.reload();
-};
- 
  // This following section will display the table with the records of individuals.
  return (
    

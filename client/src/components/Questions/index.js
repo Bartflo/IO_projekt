@@ -46,27 +46,6 @@ const Questions = () => {
 		setQuestions(list);
 	}
 
-	const [allquestions, setallQuestions] = useState([]);
-
-	async function showData(){
-		axios.get("http://localhost:8080/api/edit_questions")
-			.then(res => {
-				const result = Array.from(res.data).map(item => {
-					return {
-						id: item._id,
-						content: item.content,
-						answer: item.answer,
-						correctAnswer: item.correctAnswer,
-						}
-						})
-
-				console.log(result);
-				setallQuestions(result);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
 
 	
 	const handleSubmit = async (e) => {
@@ -91,13 +70,6 @@ const Questions = () => {
 		}
 	};
 	
-	
-	
-	
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
-	};
 
 	
 	return (

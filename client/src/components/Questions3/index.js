@@ -56,7 +56,7 @@ const Questions3 = () => {
 			
 		  <div className="centered">
 			
-			<form onSubmit={handleSubmit} className="form_questions"> 
+			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
 			
 			<h2>Wpisz pytanie do uzupełnienia</h2>
 			  <input className="login_register_input"
