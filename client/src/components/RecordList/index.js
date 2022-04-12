@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Record = (props) => (
  <tr>
    <td>{props.record.content}</td>
-   <td>{props.record.answer}</td>
+   {/* <td>{props.record.answer}</td> */}
    <td>{props.record.correctAnswer}</td>
    <td>
      <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
@@ -64,16 +64,32 @@ export default function RecordList() {
      );
    });
  }
+
+ const handleLogout = () => {
+  localStorage.removeItem("token");
+  window.location.reload();
+};
  
  // This following section will display the table with the records of individuals.
  return (
+   
    <div>
+     			<nav className="navbar">
+			<Link to="/" className="logo">Aplikacja</Link>
+			<Link to="/recordlist" className="btn_logout">Lista rekordków</Link>
+				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
+				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
+                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
+				<button className="btn_logout" onClick={handleLogout}>
+					Wyloguj
+				</button>
+			</nav>
      <h3>Record List</h3>
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
            <th>Treść pytania</th>
-           <th>Odpowiedzi</th>
+           {/* <th>Odpowiedzi</th> */}
            <th>Poprawne odpowiedzi</th>
            <th>Akcja</th>
          </tr>
