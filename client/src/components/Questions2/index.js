@@ -4,13 +4,13 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 const Questions2 = () => {
 	const [data, setData] = useState({
-		content: "",
+		content2: "",
 	});
 	
     const [error, setError] = useState("");
 	
     const handleQuestionChange = ({ currentTarget: input  }) => {
-		setData(data=>({ ...data, content:input.value.split(" ") }));
+		setData(data=>({ ...data, content2:input.value.split(" ") }));
 	};
 	
  
@@ -18,9 +18,9 @@ const Questions2 = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/questions2";
+			const url = "http://localhost:8080/api/questions";
 			const { data: res } = await axios.post(url, {
-				content:data.content,
+				content2:data.content2,
 			});
 			window.location.reload(false);
 			console.log(res.message);
@@ -63,7 +63,7 @@ const Questions2 = () => {
 			  <input className="login_register_input"
 					  	type="text"
 					  	placeholder="Treść pytania"
-					  	name="content"
+					  	name="content2"
 	  					onChange={handleQuestionChange}
 						required
 					  />

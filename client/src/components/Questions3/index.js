@@ -24,7 +24,7 @@ const Questions3 = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/questions3";
+			const url = "http://localhost:8080/api/questions";
 			const { data: res } = await axios.post(url, {
 				content:data.content,
 				correctAnswer:[...data.correctAnswer.values()],

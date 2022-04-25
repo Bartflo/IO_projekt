@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 
 
 const questionSchema = new mongoose.Schema({
-	content: { type: String, required: true},
+	content: { type: String},
+	content2: { type: String},
 	answer: [{type:String}],
-	correctAnswer: [{type:Number}],
+	correctAnswer1: [{type:Number}],
+	correctAnswer2: [{type: String}],
+	points:{type:Number, default:1},
+
 });
 
 
