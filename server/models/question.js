@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 
 const questionSchema = new mongoose.Schema({
 	content: { type: String},
-	content2: { type: String},
+	content2: [{type: String}],
 	answer: [{type:String}],
-	correctAnswer1: [{type:Number}],
-	correctAnswer2: [{type: String}],
+	correctAnswer: [{type:Number}],
+	type: {type: Number},
 	points:{type:Number, default:1},
 
 });

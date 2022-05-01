@@ -7,6 +7,7 @@ const Questions = () => {
 		content: "",
 		answer:new Map,
 		correctAnswer:new Map,
+		type: 1,
 	});
 	const [error, setError] = useState("");
 	
@@ -46,25 +47,6 @@ const Questions = () => {
 
 	const [allquestions, setallQuestions] = useState([]);
 
-	async function showData(){
-		axios.get("http://localhost:8080/api/edit_questions")
-			.then(res => {
-				const result = Array.from(res.data).map(item => {
-					return {
-						id: item._id,
-						content: item.content,
-						answer: item.answer,
-						correctAnswer: item.correctAnswer,
-						}
-						})
-
-				console.log(result);
-				setallQuestions(result);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
 
 	
 	const handleSubmit = async (e) => {
@@ -75,6 +57,7 @@ const Questions = () => {
 				content:data.content,
 				answer:[...questions.map(question => question.answer)],
 				correctAnswer:[...data.correctAnswer.values()],
+				type:data.type,
 			});
 			window.location.reload(false);	
 			console.log(res.message);

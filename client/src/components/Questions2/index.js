@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 const Questions2 = () => {
 	const [data, setData] = useState({
 		content2: "",
+		type:2,
 	});
 	
     const [error, setError] = useState("");
@@ -21,6 +22,7 @@ const Questions2 = () => {
 			const url = "http://localhost:8080/api/questions";
 			const { data: res } = await axios.post(url, {
 				content2:data.content2,
+				type:data.type,
 			});
 			window.location.reload(false);
 			console.log(res.message);

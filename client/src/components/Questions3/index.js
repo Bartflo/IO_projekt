@@ -4,8 +4,9 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 const Questions3 = () => {
 	const [data, setData] = useState({
-		content: [],
+		content2: "",
 		correctAnswer: new Map,
+		type: 3,
 	});
 	
 	
@@ -13,7 +14,7 @@ const Questions3 = () => {
     const [error, setError] = useState("");
 	
     const handleQuestionChange = ({ currentTarget: input  }) => {
-		setData(data=>({ ...data, content:input.value.split(" ") }));
+		setData(data=>({ ...data, content2:input.value.split(" ") }));
 	};
 	
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
@@ -26,8 +27,9 @@ const Questions3 = () => {
 		try {
 			const url = "http://localhost:8080/api/questions";
 			const { data: res } = await axios.post(url, {
-				content:data.content,
+				content2:data.content2,
 				correctAnswer:[...data.correctAnswer.values()],
+				type:data.type,
 			});
 			window.location.reload(false);
 			console.log(res.message);
@@ -74,18 +76,18 @@ const Questions3 = () => {
 			  <input className="login_register_input"
 					  	type="text"
 					  	placeholder="Treść pytania"
-					  	name="content"
+					  	name="content2"
 	  					onChange={handleQuestionChange}
 						required
 					  />
 			 <div>
-        	{Array.from(data.content).map((subArray, index) => {
+        	{Array.from(data.content2).map((subArray, index) => {
           return (
             <div key={index} className="showing_buttons">
-				{console.log(data.content)}
+				{console.log(data.content2)}
 					<div key={index} className="correctAnswer_container action">
 						<label>
-							<input type="checkbox" key={index} value={data.content[index]} name={data.content[index]} onChange={handleCorrectAnswerChange}/><span>{data.content[index]}</span>
+							<input type="checkbox" key={index} value={index} name={data.content2[index]} onChange={handleCorrectAnswerChange}/><span>{data.content2[index]}</span>
 						</label>
 					</div>
               {/* {Array.from(subArray).map((subitem, i) => {
