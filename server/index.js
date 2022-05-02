@@ -5,6 +5,10 @@ const cors = require("cors");
 const connection = require("./db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const questionRoutes = require("./routes/questions");
+const question2Routes = require("./routes/questions2");
+const question3Routes = require("./routes/questions3");
+const recordListRoutes = require("./routes/edit_questions");
 
 // database connection
 connection();
@@ -16,6 +20,10 @@ app.use(cors());
 // routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/questions", questionRoutes);
+app.use("/api/questions2", question2Routes);
+app.use("/api/questions3", question3Routes);
+app.use("/api/recordlist",recordListRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

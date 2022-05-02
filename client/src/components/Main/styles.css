@@ -1,33 +1,177 @@
 .navbar {
 	width: 100%;
 	height: 70px;
-	background-color: #3bb19b;
+	background-color: #12a5ee;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.navbar h1 {
+.logo {
 	color: white;
 	font-size: 25px;
 	margin-left: 20px;
+	text-decoration: none;
+}
+
+.logo:hover
+{
+	color: #d1c9c7;
 }
 
 .btn_logout {
 	border: none;
 	outline: none;
-	padding: 12px 0;
+	padding: 6px 10px;
 	background-color: white;
 	border-radius: 20px;
-	width: 120px;
+	width: 150px;
 	font-weight: bold;
 	font-size: 14px;
 	cursor: pointer;
 	margin-right: 20px;
+	text-decoration: none;
+	color:black;
 }
-.btn_logout:hover
+
+.btn_edit
 {
-	background-color:grey;
-	transition: all 0.3s ease-in-out;
+	border: none;
+	outline: none;
+	padding: 6px 10px;
+	background-color: rgb(192, 176, 176);
+	border-radius: 20px;
+	width: 150px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 20px;
+	text-decoration: none;
+	color:black;
+}
+
+.btn_delete_answer
+{
+	border: none;
+	outline: none;
+	padding: 6px 10px;
+	background-color: rgb(219, 65, 65);
+	border-radius: 20px;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: pointer;
+	margin-right: 20px;
+	text-decoration: none;
 	color:white;
+}
+
+ .btn_logout:hover,.btn_edit:hover
+{
+	background-color:rgb(140, 148, 148);
+	transition-timing-function: ease-in;
+
+
+	transition:0.3s ease-out; 	
+	color:white; 
+}
+
+
+.form_questions
+{
+	display:flex;
+	flex-direction: column;
+}
+
+.form_questions h2
+{
+	color:black;
+}
+
+.showing_buttons
+{
+	max-width: 1200px;
+	min-width:850px;
+}
+
+.correctAnswer_container
+{
+	margin: 4px;
+	background-color: #567eed;
+	box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4);
+	border-radius: 4px;
+	border: 1px solid #fff;
+	overflow: hidden;
+	float: left;
+}
+
+.correctAnswer_container label
+{
+	float: left; line-height: 3.0em;
+	width: 8.0em; height: 3.0em;
+}
+
+.correctAnswer_container span
+{
+	text-align: center;
+	padding: 3px 0;
+	display: block;
+}
+
+.correctAnswer_container input
+{
+	position: absolute;
+	display: none;
+	color: #fff !important;
+}
+
+.correctAnswer_container label input + span
+{
+	color: #fff;
+}
+
+.correctAnswer_container input:checked + span {
+    color: #ffffff;
+    text-shadow: 0 0  6px rgba(0, 0, 0, 0.8);
+}
+.action input:checked + span
+{
+	background-color: #0aee56;
+}
+
+.btn_add
+{
+	background-color: #0aee56;
+	height: 26px;
+	width: 26px;
+	font-size:1.2rem;
+	margin-left:1rem;
+	border-radius: 50%;
+	border-style: none;
+}
+.btn_remove
+{
+	background-color: #ff6464;
+	margin-left:1rem;
+	height: 26px;
+	width: 26px;
+	font-size:1.2rem;
+	border-radius: 50%;
+	border-style: none;
+}
+
+.answer_chbox
+{
+	height: 20px;
+	width:20px;
+}
+
+table,td
+{
+	border:1px solid #333;
+	padding:1rem;
+}
+thead
+{
+	background-color: #333;
+	color: white;
 }
