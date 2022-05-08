@@ -8,7 +8,9 @@ import Questions from "./components/Questions/index";
 import Questions2 from "./components/Questions2/index";
 import Questions3 from "./components/Questions3/index";
 import RecordList from "./components/RecordList/index";
-import EditQuestions from "./components/EditQuestions/index";
+import EditQuestions_1 from "./components/EditQuestions_1/index";
+import EditQuestions_2 from "./components/EditQuestions_2/index";
+import EditQuestions_3 from "./components/EditQuestions_3/index";
 import Navbar from "./components/Navbar/index";
 
 function App() {
@@ -23,7 +25,9 @@ function App() {
 			{user && <Route path="/questions2" exact element={<Questions2/>}/>}
 			{user && <Route path="/questions3" exact element={<Questions3/>}/>}
 			{user && <Route path="/recordlist" exact element={<RecordList/>}/>}
-			{user && <Route path="/edit/:id" element={<EditQuestions/>}/>}"
+			{user && <Route path="/edit_1/:id" element={<EditQuestions_1/>}/>}
+			{user && <Route path="/edit_2/:id" element={<EditQuestions_2/>}/>}
+			{user && <Route path="/edit_3/:id" element={<EditQuestions_3/>}/>}
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
 			<Route path="/" element={<Navigate replace to="/login" />} />
