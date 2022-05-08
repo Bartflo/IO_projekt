@@ -4,11 +4,20 @@ import { Link } from "react-router-dom";
 const Record = (props) => (
  <tr>
    <td>{props.record.content}</td>
-   <td>{props.record.answer}</td>
-   <td>{props.record.correctAnswer}</td>
+   {/* <td>{props.record.answer}</td> */}
+    <td>
+   {Array.from(props.record.answer).map((answer, index) => (
+      <p key={index}>{answer}</p>
+    ))}
+    </td>
+    {/* {props.record.correctAnswer} */}
    <td>
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Edit</Link> |
-     <button className="btn btn-link"
+     {Array.from(props.record.correctAnswer).map((correctAnswer,index)=>
+     <p key={index}>{props.record.answer[correctAnswer]}</p>)}
+   </td>
+   <td>
+     <Link className="btn_edit" to={`/edit/${props.record._id}`}>Edit</Link> 
+     <button className="btn_delete_answer"
        onClick={() => {
          props.deleteRecord(props.record._id);
        }}
@@ -16,6 +25,7 @@ const Record = (props) => (
        Delete
      </button>
    </td>
+   
  </tr>
 );
  
@@ -44,7 +54,7 @@ export default function RecordList() {
  
  // This method will delete a record
  async function deleteRecord(id) {
-   await fetch(`http://localhost:5000/api/questions/${id}`, {
+   await fetch(`http://localhost:8080/api/recordlist/delete/${id}`, {
      method: "DELETE"
    });
  
@@ -64,12 +74,12 @@ export default function RecordList() {
      );
    });
  }
- 
+
  // This following section will display the table with the records of individuals.
  return (
+   
    <div>
-     <h3>Record List</h3>
-     <table className="table table-striped" style={{ marginTop: 20 }}>
+     <table className="table">
        <thead>
          <tr>
            <th>Treść pytania</th>

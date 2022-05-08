@@ -56,21 +56,9 @@ const Questions3 = () => {
 	return (
 		<div className="main_container">
 			
-			<nav className="navbar">
-			<Link to="/" className="logo">Aplikacja</Link>
-				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
-                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
-				<button className="btn_logout" onClick={handleLogout}>
-					Wyloguj
-				</button>
-			</nav>
-
-
-
 		  <div className="centered">
 			
-			<form onSubmit={handleSubmit} className="form_questions"> 
+			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
 			
 			<h2>Wpisz pytanie do uzupełnienia</h2>
 			  <input className="login_register_input"

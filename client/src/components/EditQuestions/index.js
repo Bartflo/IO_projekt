@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import axios from "axios";
  
-export default function Edit() {
+const Edit = () => {
  const [form, setForm] = useState({
    content: "",
-   answer: "",
-   correctAnswer: "",
-   records: [],
+   answer:new Map,
  });
  const params = useParams();
  const navigate = useNavigate();
  
+
+ const [questions, setQuestions] = useState([
+  {answer: ""},
+  {answer: ""},
+  {answer: ""},
+]);
+
  useEffect(() => {
    async function fetchData() {
      const id = params.id.toString();
@@ -25,10 +31,10 @@ export default function Edit() {
      const record = await response.json();
      if (!record) {
        window.alert(`Record with id ${id} not found`);
-       navigate("/");
+       navigate("/recordlist");
        return;
      }
- 
+    //  setQuestions(form.answer);
      setForm(record);
    }
  
@@ -37,34 +43,46 @@ export default function Edit() {
    return;
  }, [params.id, navigate]);
  
- // These methods will update the state properties.
- function updateForm(value) {
-   return setForm((prev) => {
-     return { ...prev, ...value };
-   });
- }
- 
+
+
 //handle form change
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setForm({ [name]: value });
-    }
+  const handleQuestionChange = ({ currentTarget: input }) => {
+  setForm(form=>({ ...form, content:input.value }));
+  };	
+
+
+
+//handle answer change
+const handleAnswerChange = (e, index) => {
+  const {name, value} = e.target
+  const list = [...questions];
+  list[index][name] = value;
+  setQuestions(list);
+}
+const [data, setData] = useState({
+  correctAnswer:new Map,
+});
+
+
+const handleCorrectAnswerChange = ({ currentTarget: input }) => {
+  setData(data=>({ ...data,  correctAnswer:data.correctAnswer.set(input.name,input.value)}));
+};
 
     //handle form submit
     function handleSubmit(event) {
         event.preventDefault();
         const id = params.id.toString();
         const content = form.content;
-        const answer = form.answer;
-        const correctAnswer = form.correctAnswer;
-        const data = { id, content, answer, correctAnswer};
-        const url = `http://localhost:8080/api/recordlist/${id}`;
+        const answer = [...questions.map(question => question.answer)];
+        const correctAnswer = [...data.correctAnswer.values()];
+        const submitData = { id, content, answer, correctAnswer};
+        const url = `http://localhost:8080/api/recordlist/update/${id}`;
         const options = {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(submitData),
         };
         fetch(url, options)
             .then((response) => {
@@ -73,112 +91,58 @@ export default function Edit() {
                 }
                 return response.json();
             })
-            .then((data) => {
+            .then((submitData) => {
                 window.alert(`Record with id ${id} updated`);
-                navigate("/");
+                navigate("/recordlist");
             })
             .catch((err) => {
                 window.alert(`An error has occurred: ${err.message}`);
             });
     }
 
-
-
- async function onSubmit(e) {
-   e.preventDefault();
-   const editedPerson = {
-     content: form.content,
-     answer: form.answer,
-     correctAnswer: form.correctAnswer,
-   };
- 
-   // This will send a post request to update the data in the database.
-   await fetch(`http://localhost:8080/update/${params.id}`, {
-     method: "POST",
-     body: JSON.stringify(editedPerson),
-     headers: {
-       'Content-Type': 'application/json'
-     },
-   });
- 
-   navigate("/");
- }
-
     
  
  // This following section will display the form that takes input from the user to update the data.
  return (
-   <div>
-     <h3>Update Record</h3>
-     <form onSubmit={handleSubmit}>
-       <div className="form-group">
+   <div className="main_container">
+     <div className="centered">
+     <form onSubmit={handleSubmit} className="form_questions">
          <label htmlFor="name">Treść pytania: </label>
          <input
            type="text"
-           className="form-control"
+           className="login_register_input"
            id="content"
            value={form.content}
-           onChange={handleChange}
+           onChange={handleQuestionChange}
          />
-       </div>
-       <div className="form-group">
-         <label htmlFor="position">Odpowiedzi: </label>
-         <input
-           type="text"
-           className="form-control"
-           id="answer"
-           value={form.answer}
-           onChange={(e) => updateForm({ position: e.target.value })}
-         />
-       </div>
-       <div className="form-group">
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionIntern"
-             value="Intern"
-             checked={form.correctAnswer === 1}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionIntern" className="form-check-label">1</label>
-         </div>
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionJunior"
-             value="Junior"
-             checked={form.correctAnswer === 2}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionJunior" className="form-check-label">2</label>
-         </div>
-         <div className="form-check form-check-inline">
-           <input
-             className="form-check-input"
-             type="radio"
-             name="positionOptions"
-             id="positionSenior"
-             value="Senior"
-             checked={form.correctAnswer === 3}
-             onChange={(e) => updateForm({ level: e.target.value })}
-           />
-           <label htmlFor="positionSenior" className="form-check-label">3</label>
-       </div>
-       </div>
-       <br />
- 
-       <div className="form-group">
-         <input
+         <h1>Odpowiedzi</h1>
+         {console.log(questions)}
+       {Array.from(form.answer).map((question , index) => (
+				<div key={index}>
+				<input className="login_register_input"
+					  	type="text"
+					  	placeholder="Odpowiedz"
+					  	name="answer"
+						defaultValue={question}
+						onChange={(e) => handleAnswerChange(e, index)}
+						required
+					  />
+
+        <input type="checkbox" className="answer_chbox" value={index} onChange={handleCorrectAnswerChange} name={index}></input>
+            </div>
+       ))}
+
+      
+         <button
            type="submit"
-           value="Update Record"
-           className="btn btn-primary"
-         />
-       </div>
+           className="btn_login_register">
+             Zaktualizuj pytanie
+          </button>
      </form>
+
+      </div>
    </div>
  );
-}
+};
+
+export default Edit;

@@ -38,26 +38,9 @@ const Questions2 = () => {
 	};
 	
 	
-	
-	
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
-	};
-
-	
 	return (
 		<div className="main_container">
-			
-			<nav className="navbar">
-			<Link to="/" className="logo">Aplikacja</Link>
-				<Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-				<Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
-                <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
-				<button className="btn_logout" onClick={handleLogout}>
-					Wyloguj
-				</button>
-			</nav>
+
 			<div className="centered">
 			
 			<form onSubmit={handleSubmit} className="form_questions"> 
