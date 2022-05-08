@@ -47,11 +47,8 @@ const Questions = () => {
 		setQuestions(list);
 	}
 
-<<<<<<< HEAD
 	const [allquestions, setallQuestions] = useState([]);
 
-=======
->>>>>>> master
 
 	
 	const handleSubmit = async (e) => {

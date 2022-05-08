@@ -52,7 +52,7 @@ const Main = () => {
 			
 			<div className="centered">
 			
-			<form onSubmit={handleSubmit} className="form_questions"> 
+			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
 			<h2>Wpisz nazwę testu</h2>
 			  <input className="login_register_input"
 					  	type="text"
