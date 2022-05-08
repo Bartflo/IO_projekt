@@ -9,6 +9,7 @@ const Questions = () => {
 		content: "",
 		answer:new Map,
 		correctAnswer:new Map,
+		type: 1,
 	});
 	const [error, setError] = useState("");
 	
@@ -46,6 +47,11 @@ const Questions = () => {
 		setQuestions(list);
 	}
 
+<<<<<<< HEAD
+	const [allquestions, setallQuestions] = useState([]);
+
+=======
+>>>>>>> master
 
 	
 	const handleSubmit = async (e) => {
@@ -56,6 +62,7 @@ const Questions = () => {
 				content:data.content,
 				answer:[...questions.map(question => question.answer)],
 				correctAnswer:[...data.correctAnswer.values()],
+				type:data.type,
 			});
 			window.location.reload(false);	
 			console.log(res.message);
