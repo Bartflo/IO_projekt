@@ -11,7 +11,10 @@ import RecordList from "./components/RecordList/index";
 import EditQuestions_1 from "./components/EditQuestions_1/index";
 import EditQuestions_2 from "./components/EditQuestions_2/index";
 import EditQuestions_3 from "./components/EditQuestions_3/index";
+import EditTest from "./components/EditTest/index";
+import Testslist from "./components/Tests/index";
 import Navbar from "./components/Navbar/index";
+
 
 function App() {
 	const user = localStorage.getItem("token");
@@ -28,6 +31,9 @@ function App() {
 			{user && <Route path="/edit_1/:id" element={<EditQuestions_1/>}/>}
 			{user && <Route path="/edit_2/:id" element={<EditQuestions_2/>}/>}
 			{user && <Route path="/edit_3/:id" element={<EditQuestions_3/>}/>}
+			{user && <Route path="/testslist" element={<Testslist/>}/>}
+			{user && <Route path="/edittest/:id" element={<EditTest/>}/>}
+
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
 			<Route path="/" element={<Navigate replace to="/login" />} />
