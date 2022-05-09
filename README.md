@@ -1,5 +1,7 @@
 # IO_projekt
 
+## **[Opis projektu](https://github.com/Bartflo/IO_projekt/wiki)**
+
 ## Instalacja
 ```
 cd client/ && npm install
