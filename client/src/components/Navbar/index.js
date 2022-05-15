@@ -14,7 +14,7 @@ const Navigation_bar = () => {
 	};
 
     return(
-        <Navbar defaultExpand expand="lg" bg="priamry" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="priamry" variant="dark">
         <Container>
         <Navbar.Brand><Link to="/" style={{textDecoration:"none",color:"inherit"}}>Aplikacja</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

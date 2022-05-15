@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button'
 const TestsRecord = (props) => (
     <tr>
       
-        <td>{props.test._id}</td>
         <td>{props.test.name}</td>
       
         
@@ -18,7 +17,8 @@ const TestsRecord = (props) => (
    );
 
 
-const Record = (props) => (
+
+   const Record = (props) => (
     <tr>
       {(props.record.type==1 && <td>{props.record.content}</td>) || ((props.record.type==2 || props.record.type==3) && <td>{props.record.content2.join(' ')}</td>)}
       {/* <td>{props.record.answer}</td> */}
@@ -37,14 +37,32 @@ const Record = (props) => (
       </td>
        {(props.record.type==1 && <td>Wielokrotnego wyboru</td>) || (props.record.type==2 && <td>Odpowiednia kolejność</td>) || (props.record.type==3 && <td>Uzupełnianie luk</td>)}
       <td>
-        <input type="checkbox" checked={props.record.isActive} />
+        <input type="checkbox" value={props.record._id} onChange={handleQuestionChange} name={props.record._id}></input>
+      </td>
+      <td>
+        {props.record._id}
       </td>
         
     </tr>
    );
 
 
-   export default function RecordList() {
+
+
+   const EditTest = () => {
+
+
+   
+    const [data,setData] = useState({
+      questions:new Map,
+    })
+
+    const handleQuestionChange = ({ currentTarget: input }) => {
+  setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
+  };
+
+
+
     const [records, setRecords] = useState([]);
     const [test, setTest] = useState({
       name:""
@@ -89,8 +107,6 @@ const Record = (props) => (
         return;
     }, );
 
-    
-
        function Testlist() {
         return Array.from(test).map((test) => {
             return (
@@ -115,6 +131,29 @@ const Record = (props) => (
     }
 
 
+    function handleSubmit(event)
+    {
+      event.preventDefault();
+      const id = params.id.toString();
+      const questions = data.questions;
+      const url = `http://localhost:8080/api/testslist/update/${id}`;
+      const options = 
+      {
+        method: "PUT",
+        headers:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(questions),
+      };
+      fetch(url, options)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      }
+      );
+    };
+
 
     return (
    
@@ -130,14 +169,15 @@ const Record = (props) => (
                   <th>Poprawne odpowiedzi</th>
                   <th>Typ pytania</th>
                   <th>Czy dodać?</th>
+                  <th>id</th>
                 </tr>
               </thead>
               <tbody>{recordList()}</tbody>
             </Table>
             </Col>
             <Col>
-          <Button style={{marginTop:200}} variant="outline-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <Button style={{marginTop:200}} variant="outline-primary" onClick={handleSubmit}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-narrow-right" width="40" height="40" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <line x1="5" y1="12" x2="19" y2="12" />
             <line x1="15" y1="16" x2="19" y2="12" />
@@ -171,3 +211,5 @@ const Record = (props) => (
       );
        
 }
+
+export default EditTest;

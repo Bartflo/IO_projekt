@@ -28,32 +28,6 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-//copy selected items from one collection to another
-router.post("/:id", async (req, res) => {
-    try {
-        const test = await Test.findById(req.params.id);
-        if (!test) {
-            return res.status(404).send({ message: "Test not found" });
-        }
-        const newTest = new Test({
-            name: test.name,
-            questions: test.questions,
-            answers: test.answers,
-            correct: test.correct,
-            
-        });
-        await newTest.save();
-        res.send(newTest);
-    } catch (error) {
-        console.error(error);
-        if (error.name === "CastError") {
-            return res.status(404).send({ message: "Test not found" });
-        }
-        res.status(500).send({ message: "Internal Server Error" });
-    }
-});
-
-
 //edit question by id
 router.put("/update/:id", async (req, res) => {
     try {
