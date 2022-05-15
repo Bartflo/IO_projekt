@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-//edit question by id
+//edit test by id
 router.put("/update/:id", async (req, res) => {
     try {
         const test = await Test.findById(req.params.id);

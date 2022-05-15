@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams} from "react-router";
+import { useParams, useNavigate} from "react-router";
 import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -37,7 +37,8 @@ const TestsRecord = (props) => (
       </td>
        {(props.record.type==1 && <td>Wielokrotnego wyboru</td>) || (props.record.type==2 && <td>Odpowiednia kolejność</td>) || (props.record.type==3 && <td>Uzupełnianie luk</td>)}
       <td>
-        <input type="checkbox" value={props.record._id} onChange={handleQuestionChange} name={props.record._id}></input>
+        <input type="checkbox" value={props.record._id} onChange={props.handleQuestionChange}
+        name={props.record._id}></input>
       </td>
       <td>
         {props.record._id}
@@ -49,17 +50,18 @@ const TestsRecord = (props) => (
 
 
 
-   const EditTest = () => {
+   export default function EditTest(){
 
 
-   
+    const navigate = useNavigate();
     const [data,setData] = useState({
       questions:new Map,
     })
 
     const handleQuestionChange = ({ currentTarget: input }) => {
   setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
-  };
+  console.log(data.questions)
+};
 
 
 
@@ -131,29 +133,36 @@ const TestsRecord = (props) => (
     }
 
 
-    function handleSubmit(event)
-    {
+    function handleSubmit(event) {
       event.preventDefault();
       const id = params.id.toString();
-      const questions = data.questions;
+      const questions = [...data.questions.values()]
+      const submitData = {id,questions};
       const url = `http://localhost:8080/api/testslist/update/${id}`;
-      const options = 
-      {
-        method: "PUT",
-        headers:
-        {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(questions),
+      const options = {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
       };
       fetch(url, options)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      }
-      );
-    };
-
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error(response.statusText);
+              }
+              return response.json();
+          })
+          .then((submitData) => {
+              window.alert(`Record with id ${id} updated`);
+              navigate("/testslist");
+          })
+          .catch((err) => {
+              window.alert(`An error has occurred: ${err.message}`);
+          });
+ 
+        }
+      
 
     return (
    
@@ -212,4 +221,3 @@ const TestsRecord = (props) => (
        
 }
 
-export default EditTest;
