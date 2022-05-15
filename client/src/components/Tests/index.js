@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
- 
+import Table from 'react-bootstrap/Table'
 const Record = (props) => (
  <tr>
    <td>{props.record.name}</td>
@@ -69,7 +69,7 @@ export default function Testslist() {
  return (
    
    <div>
-     <table className="table">
+     <Table striped bordered hover size="sm">
        <thead>
          <tr>
            <th>Nazwa testu</th>
@@ -77,7 +77,7 @@ export default function Testslist() {
          </tr>
        </thead>
        <tbody>{recordList()}</tbody>
-     </table>
+     </Table>
    </div>
  );
 }

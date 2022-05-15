@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
- 
+import Table from 'react-bootstrap/Table'
 const Record = (props) => (
  <tr>
    {(props.record.type==1 && <td>{props.record.content}</td>) || ((props.record.type==2 || props.record.type==3) && <td>{props.record.content2.join(' ')}</td>)}
@@ -85,7 +85,7 @@ export default function RecordList() {
  return (
    
    <div>
-     <table className="table">
+     <Table striped bordered hover size="sm">
        <thead>
          <tr>
            <th>Treść pytania</th>
@@ -96,7 +96,7 @@ export default function RecordList() {
          </tr>
        </thead>
        <tbody>{recordList()}</tbody>
-     </table>
+     </Table>
    </div>
  );
 }

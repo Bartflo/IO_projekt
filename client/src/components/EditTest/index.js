@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-
-
+import { useParams} from "react-router";
+import Table from 'react-bootstrap/Table'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 
 const TestsRecord = (props) => (
     <tr>
@@ -14,6 +16,7 @@ const TestsRecord = (props) => (
       
     </tr>
    );
+
 
 const Record = (props) => (
     <tr>
@@ -33,15 +36,19 @@ const Record = (props) => (
         (props.record.type==2 && <p style={{color:"red"}}>Nie dotyczy</p>)}
       </td>
        {(props.record.type==1 && <td>Wielokrotnego wyboru</td>) || (props.record.type==2 && <td>Odpowiednia kolejność</td>) || (props.record.type==3 && <td>Uzupełnianie luk</td>)}
-   
+      <td>
+        <input type="checkbox" checked={props.record.isActive} />
+      </td>
         
-      
     </tr>
    );
 
+
    export default function RecordList() {
     const [records, setRecords] = useState([]);
-    const [test, setTest] = useState([]);
+    const [test, setTest] = useState({
+      name:""
+   });
     const params = useParams();
     // This method fetches the records from the database.
     useEffect(() => {
@@ -82,6 +89,8 @@ const Record = (props) => (
         return;
     }, );
 
+    
+
        function Testlist() {
         return Array.from(test).map((test) => {
             return (
@@ -104,30 +113,58 @@ const Record = (props) => (
         )
       });
     }
+
+
+
     return (
    
         <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Treść pytania</th>
-                <th>Odpowiedzi</th>
-                <th>Poprawne odpowiedzi</th>
-                <th>Typ pytania</th>
-                <th>Akcja</th>
-              </tr>
-            </thead>
-            <tbody>{recordList()}</tbody>
-          </table>
-        
-        <table className="table">
-            <thead>
+        <Container>
+          <Row xs="auto">
+            <Col>
+            <Table striped bordered hover size="sm">
+              <thead>
                 <tr>
-                    <th>Nazwa testu</th>
+                  <th>Treść pytania</th>
+                  <th>Odpowiedzi</th>
+                  <th>Poprawne odpowiedzi</th>
+                  <th>Typ pytania</th>
+                  <th>Czy dodać?</th>
                 </tr>
-            </thead>
-            <tbody>{Testlist()}</tbody>
-        </table>
+              </thead>
+              <tbody>{recordList()}</tbody>
+            </Table>
+            </Col>
+            <Col>
+          <Button style={{marginTop:200}} variant="outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-right" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <line x1="15" y1="16" x2="19" y2="12" />
+            <line x1="15" y1="8" x2="19" y2="12" />
+            </svg>
+          </Button>{' '}
+          
+          </Col>
+          <Col>
+          
+
+          <Table striped border hover size="sm">
+              <thead>
+                  <tr>
+                      <th>Nazwa testu</th>
+                  </tr>
+
+              </thead>
+              <tbody>{Testlist()}
+                  <tr>
+                    <td><p>{test.name}</p></td>
+                  </tr>
+                  </tbody>
+          </Table>
+          </Col>
+          </Row>
+        </Container>
         </div>
 
         
