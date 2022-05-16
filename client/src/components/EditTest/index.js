@@ -59,16 +59,22 @@ const TestsRecord = (props) => (
       setChecked(!checked);
       setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
     console.log(data.questions)
-    console.log("dupa")
+
 };
-  
+  const [pass, setPass] = useState({
+  passing:1
+  });  
 
-
+  const handleChange = ({ currentTarget: input }) => {
+    setPass(pass=>({ ...pass, passing:input.value }));
+ 
+  };
     const [records, setRecords] = useState([]);
     const [test, setTest] = useState({
       name:""
    });
-    const params = useParams();
+  
+   const params = useParams();
     // This method fetches the records from the database.
     useEffect(() => {
       async function getRecords() {
@@ -164,6 +170,39 @@ const TestsRecord = (props) => (
         }
       
 
+
+
+    function handlePassSumbit(event) {
+      event.preventDefault();
+      const id = params.id.toString();
+      const passing = pass.passing;
+      const submitData = {id,pass};
+      const url = `http://localhost:8080/api/testslist/update/${id}`;
+      const options = {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+      };
+      fetch(url, options)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error(response.statusText);
+              }
+              return response.json();
+          })
+          .then((submitData) => {
+              window.alert(`Record o id ${id} zaktualizowany`);
+              window.location.reload(false);	
+              //navigate("/testslist");
+          })
+          .catch((err) => {
+              window.alert(`An error has occurred: ${err.message}`);
+          });
+ 
+        }
+
     return (
    
         <div>
@@ -225,6 +264,7 @@ const TestsRecord = (props) => (
                       <th>Nazwa testu</th>
                       <th>Maxymalna ilosc punktow do zdobycia</th>
                       <th>Id pytań w tescie</th>
+                      <th>Próg zaliczenia</th>
                   </tr>
               </thead>
               <tbody>{Testlist()}
@@ -238,6 +278,10 @@ const TestsRecord = (props) => (
                         )}
                       )}
                     </td>
+                  <td>
+                    <input type="number" name="passing" value={pass.passing} onChange={handleChange}></input>
+                    <button onClick={handlePassSumbit}>Zapisz</button>
+                  </td>
                   </tr>
                   </tbody>
           </Table>

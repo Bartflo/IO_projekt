@@ -17,6 +17,7 @@ const Questions = () => {
 
 	const handleQuestionChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data, content:input.value }));
+		console.log(data.content)
 	};	
 	
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
