@@ -10,7 +10,7 @@ const TestsRecord = (props) => (
     <tr>
       
         <td>{props.test.name}</td>
-      
+        <td>{props.test.questions}</td>
         
       
     </tr>
@@ -153,7 +153,8 @@ const TestsRecord = (props) => (
               return response.json();
           })
           .then((submitData) => {
-              window.alert(`Record with id ${id} updated`);
+              window.alert(`Record o id ${id} zaktualizowany`);
+              window.location.reload(false);	
               //navigate("/testslist");
           })
           .catch((err) => {
@@ -166,7 +167,6 @@ const TestsRecord = (props) => (
     return (
    
         <div>
-        <Container>
           <Row xs="auto">
             <Col>
             <Table striped bordered hover size="sm">
@@ -176,23 +176,25 @@ const TestsRecord = (props) => (
                   <th>Odpowiedzi</th>
                   <th>Poprawne odpowiedzi</th>
                   <th>Typ pytania</th>
-                  <th>Dupa</th>
                 </tr>
               </thead>
               <tbody>{recordList()}
-              <tr>
               {Array.from(records).map((record,index) => {
                   return (
+              <tr key={index} >
+
                     <td key={index}>
                    
                       <input key={index} type="checkbox" value={record._id}  onChange={handleQuestionChange}
                         name={record._id}></input>
+                        <label htmlFor={record._id}>{ (record.type==1 && record.content) || ((record.type==2 || record.type==3) && record.content2.join(' ')) }</label>
                    
                     </td>
+             </tr>
+              
                   )
                 })
               }
-              </tr>
               </tbody>
 
               
@@ -217,22 +219,30 @@ const TestsRecord = (props) => (
           <Col>
           
 
-          <Table striped border hover size="sm">
+          <Table striped bordered hover size="sm">
               <thead>
                   <tr>
                       <th>Nazwa testu</th>
+                      <th>Maxymalna ilosc punktow do zdobycia</th>
+                      <th>Id pytań w tescie</th>
                   </tr>
-
               </thead>
               <tbody>{Testlist()}
                   <tr>
-                    <td><p>{test.name}</p></td>
+                    <td>{test.name}</td>
+                    <td>{test.questions && test.questions.length}</td>
+                    <td>
+                      {test.questions && Array.from(test.questions).map((test,index) => {
+                        return (
+                          <p key={index} >{test}</p>
+                        )}
+                      )}
+                    </td>
                   </tr>
                   </tbody>
           </Table>
           </Col>
           </Row>
-        </Container>
         </div>
 
         
