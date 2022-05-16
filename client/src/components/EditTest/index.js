@@ -36,33 +36,32 @@ const TestsRecord = (props) => (
         (props.record.type==2 && <p style={{color:"red"}}>Nie dotyczy</p>)}
       </td>
        {(props.record.type==1 && <td>Wielokrotnego wyboru</td>) || (props.record.type==2 && <td>Odpowiednia kolejność</td>) || (props.record.type==3 && <td>Uzupełnianie luk</td>)}
-      <td>
-        <input type="checkbox" value={props.record._id} onChange={props.handleQuestionChange}
-        name={props.record._id}></input>
-      </td>
-      <td>
-        {props.record._id}
-      </td>
+      
         
     </tr>
    );
 
-
+  
 
 
    export default function EditTest(){
 
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [data,setData] = useState({
       questions:new Map,
     })
 
-    const handleQuestionChange = ({ currentTarget: input }) => {
-  setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
-  console.log(data.questions)
-};
+    const [checked, setChecked] = React.useState(false);
 
+   
+    const handleQuestionChange = ({ currentTarget: input }) => {
+      setChecked(!checked);
+      setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
+    console.log(data.questions)
+    console.log("dupa")
+};
+  
 
 
     const [records, setRecords] = useState([]);
@@ -155,7 +154,7 @@ const TestsRecord = (props) => (
           })
           .then((submitData) => {
               window.alert(`Record with id ${id} updated`);
-              navigate("/testslist");
+              //navigate("/testslist");
           })
           .catch((err) => {
               window.alert(`An error has occurred: ${err.message}`);
@@ -177,14 +176,34 @@ const TestsRecord = (props) => (
                   <th>Odpowiedzi</th>
                   <th>Poprawne odpowiedzi</th>
                   <th>Typ pytania</th>
-                  <th>Czy dodać?</th>
-                  <th>id</th>
+                  <th>Dupa</th>
                 </tr>
               </thead>
-              <tbody>{recordList()}</tbody>
+              <tbody>{recordList()}
+              <tr>
+              {Array.from(records).map((record,index) => {
+                  return (
+                    <td key={index}>
+                   
+                      <input key={index} type="checkbox" value={record._id}  onChange={handleQuestionChange}
+                        name={record._id}></input>
+                   
+                    </td>
+                  )
+                })
+              }
+              </tr>
+              </tbody>
+
+              
+              
             </Table>
             </Col>
+            
             <Col>
+          
+          
+          
           <Button style={{marginTop:200}} variant="outline-primary" onClick={handleSubmit}>
             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-narrow-right" width="40" height="40" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
