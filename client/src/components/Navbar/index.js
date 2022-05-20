@@ -27,6 +27,10 @@ const Navigation_bar = () => {
                 <NavDropdown.Item><Link to="/questions2" style={{textDecoration:"none",color:"inherit"}}>Pytanie kolejność</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="/questions3" style={{textDecoration:"none",color:"inherit"}}>Pytanie wypełnianie</Link></NavDropdown.Item>
             </NavDropdown>
+            <NavDropdown title="Stwórz" id="collasible-nav-dropdown">
+                <NavDropdown.Item><Link to="/create_group" style={{textDecoration:"none",color:"inherit"}}>Grupa</Link></NavDropdown.Item>
+
+            </NavDropdown>
             </Nav>
             <Nav>
             <Nav.Link>

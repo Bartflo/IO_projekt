@@ -14,6 +14,7 @@ import EditQuestions_3 from "./components/EditQuestions_3/index";
 import EditTest from "./components/EditTest/index";
 import Testslist from "./components/Tests/index";
 import Navbar from "./components/Navbar/index";
+import CreateGroup from "./components/CreateGroup/index";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 			{user && <Route path="/edit_3/:id" element={<EditQuestions_3/>}/>}
 			{user && <Route path="/testslist" element={<Testslist/>}/>}
 			{user && <Route path="/edittest/:id" element={<EditTest/>}/>}
+			{user && <Route path="/create_group" element={<CreateGroup/>}/>}
 
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
@@ -41,6 +43,14 @@ function App() {
 			<Route path="/questions2" element={<Navigate replace to="/login" />} />
 			<Route path="/questions3" element={<Navigate replace to="/login" />} />
 			<Route path="/recordlist" element={<Navigate replace to="/login" />} />
+			<Route path="/edit_1/:id" element={<Navigate replace to="/login" />} />
+			<Route path="/edit_2/:id" element={<Navigate replace to="/login" />} />
+			<Route path="/edit_3/:id" element={<Navigate replace to="/login" />} />
+			<Route path="/testslist" element={<Navigate replace to="/login" />} />
+			<Route path="/edittest/:id" element={<Navigate replace to="/login" />} />
+			<Route path="/create_group" element={<Navigate replace to="/login" />} />
+			
+
 		</Routes>
 		</div>
 	);

@@ -9,6 +9,7 @@ const questionRoutes = require("./routes/questions");
 const recordListRoutes = require("./routes/edit_questions");
 const testRoutes = require("./routes/test");
 const testsListRoutes = require("./routes/testslist");
+const groupRoutes = require("./routes/groups");
 // database connection
 connection();
 
@@ -23,6 +24,7 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/recordlist",recordListRoutes);
 app.use("/api/testslist",testsListRoutes);
+app.use("/api/group",groupRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

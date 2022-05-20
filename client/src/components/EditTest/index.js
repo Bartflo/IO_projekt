@@ -176,7 +176,7 @@ const TestsRecord = (props) => (
       event.preventDefault();
       const id = params.id.toString();
       const passing = pass.passing;
-      const submitData = {id,pass};
+      const submitData = {id,passing};
       const url = `http://localhost:8080/api/testslist/update/${id}`;
       const options = {
           method: "PUT",
@@ -242,7 +242,7 @@ const TestsRecord = (props) => (
             </Col>
             
             <Col>
-          
+              {console.log(test)}
           
           
           <Button style={{marginTop:200}} variant="outline-primary" onClick={handleSubmit}>
@@ -262,8 +262,8 @@ const TestsRecord = (props) => (
               <thead>
                   <tr>
                       <th>Nazwa testu</th>
-                      <th>Maxymalna ilosc punktow do zdobycia</th>
-                      <th>Id pytań w tescie</th>
+                      <th>Max pkt.</th>
+                      <th>Pytania w teście</th>
                       <th>Próg zaliczenia</th>
                   </tr>
               </thead>
@@ -274,12 +274,14 @@ const TestsRecord = (props) => (
                     <td>
                       {test.questions && Array.from(test.questions).map((test,index) => {
                         return (
-                          <p key={index} >{test}</p>
+                          (test.type == 1 && <p key={index}>{test.content}</p>) || ((test.type == 2 || test.type == 3) && <p key={index}>{test.content2.join(' ')}</p>)
                         )}
                       )}
                     </td>
                   <td>
-                    <input type="number" name="passing" value={pass.passing} onChange={handleChange}></input>
+                    {test.questions &&
+                    <input type="number" name="passing" min="1" max={test.questions.length} value={pass.passing} onChange={handleChange}></input>
+                    }
                     <button onClick={handlePassSumbit}>Zapisz</button>
                   </td>
                   </tr>
