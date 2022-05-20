@@ -27,6 +27,16 @@ router.get("/see", async (req, res) => {
     }
 });
 
+router.get("/seeuser", async (req, res) => {
+    try {
+        const questions = await User.find();
+        res.send(questions);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+});
+
 
 
 module.exports = router;

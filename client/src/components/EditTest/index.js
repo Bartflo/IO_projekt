@@ -242,7 +242,6 @@ const TestsRecord = (props) => (
             </Col>
             
             <Col>
-              {console.log(test)}
           
           
           <Button style={{marginTop:200}} variant="outline-primary" onClick={handleSubmit}>
