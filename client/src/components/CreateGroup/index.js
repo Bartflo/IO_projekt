@@ -1,43 +1,58 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import {useState} from "react";
-import Autocomplete from "./Autocomplete";
-import "./styles.css";
 
 const CreateGroup = () => {
 
-    const [records,setRecords] = useState([]);
+    const [data,setData] = useState({
+        name: "",
+    })
+    const [error, setError] = useState("");
 
-    useEffect(() => {
-        async function getRecords() {
-            const response = await fetch(`http://localhost:8080/api/group/seeuser`);
 
-            if (!response.ok) {
-                const message = `An error occurred: ${response.statusText}`;
-                window.alert(message);
-                return;
+    const handleGroupChange = ({ currentTarget: input  }) => {
+        setData(data=>({ ...data, name:input.value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = "http://localhost:8080/api/group";
+            const { data: res } = await axios.post(url, {
+                name:data.name,
+            });
+            window.location.reload(false);
+            console.log(res.message);
+        } catch (error) {
+            if (
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message);
             }
-
-            const records = await response.json();
-            setRecords(records);
-
         }
-
-        getRecords();
-
-        return;
-    }, [records.length]);
+    };
 
 
     return(
-        <div className="wrapper">
-      <h1>Stwórz grupe</h1>
-    
-      <Autocomplete
-      suggestions={records.map((record) => {
-          return record.firstName +" "+ record.lastName;
-      })}
-      />
+<div className="main_container">
+    <div className="centered">
+    <form onSubmit={handleSubmit} className="form_questions" autoComplete='off'>
+            <h2>Wpisz nazwę grupy</h2>
+            <input className="login_register_input"
+                    type="text"
+                    placeholder="Nazwa grupy"
+                    name="name"
+                    onChange={handleGroupChange}
+                    required
+                    />
+            <button type="submit" className="btn_login_register">
+                Utwórz grupę
+            </button>
+        </form>
     </div>
+</div>
     )
 
 };

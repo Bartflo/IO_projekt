@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate} from "react-router";
 import Table from 'react-bootstrap/Table'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const TestsRecord = (props) => (
     <tr>
@@ -65,6 +65,10 @@ const TestsRecord = (props) => (
   passing:1
   });  
 
+  const [groupChange, setGroupChange] = useState({
+    group:""
+  });
+
   const handleChange = ({ currentTarget: input }) => {
     setPass(pass=>({ ...pass, passing:input.value }));
  
@@ -73,6 +77,7 @@ const TestsRecord = (props) => (
     const [test, setTest] = useState({
       name:""
    });
+    const [groups,setGroups] = useState([]);
   
    const params = useParams();
     // This method fetches the records from the database.
@@ -94,7 +99,27 @@ const TestsRecord = (props) => (
     
       return;
     }, [records.length]);
+
+    useEffect(() => {
+      async function getGroup() {
+        const response = await fetch(`http://localhost:8080/api/group/see`);
+
+        if (!response.ok) {
+          const message = `An error occurred: ${response.statusText}`;
+          window.alert(message);
+          return;
+        }
+
+        const groups = await response.json();
+        setGroups(groups);
+      }
+
+      getGroup();
+
+      return;
+    }, [groups.length]);
     
+
     useEffect(() => {
         async function getTest() {
             const id = params.id.toString();
@@ -202,6 +227,47 @@ const TestsRecord = (props) => (
           });
  
         }
+    
+    function handleGroupSubmit(event)
+    {
+      event.preventDefault();
+      const id = params.id.toString();
+      const group = groupChange.group;
+      const submitData = {id,group};
+      const url = `http://localhost:8080/api/testslist/update/${id}`;
+      const options = {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+      };
+      fetch(url, options)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error(response.statusText);
+              }
+              return response.json();
+          }
+          )
+          .then((submitData) => {
+              window.alert(`Record o id ${id} zaktualizowany`);
+              window.location.reload(false);	
+              //navigate("/testslist");
+          }
+          )
+          .catch((err) => {
+              window.alert(`An error has occurred: ${err.message}`);
+          });
+
+    }
+
+
+    const handleGroupChange = ({ currentTarget: input }) => {
+      setGroupChange(groupChange=>({ ...groupChange, group:input.value}));
+      console.log(groupChange.group)
+  };
+
 
     return (
    
@@ -264,6 +330,7 @@ const TestsRecord = (props) => (
                       <th>Max pkt.</th>
                       <th>Pytania w teście</th>
                       <th>Próg zaliczenia</th>
+                      <th>Przypisz grupe</th>
                   </tr>
               </thead>
               <tbody>{Testlist()}
@@ -283,6 +350,17 @@ const TestsRecord = (props) => (
                     }
                     <button onClick={handlePassSumbit}>Zapisz</button>
                   </td>
+                  <td>
+                    <Form.Select onChange={handleGroupChange}>
+                      <option>Wybierz grupę</option>
+                      {groups && groups.map((group) => {
+                        return (
+                          <option key={group._id} value={group._id} >{group.name}</option>
+                        )
+                      })}
+                    </Form.Select>
+                    <button onClick={handleGroupSubmit}>Zapisz</button>
+                    </td>
                   </tr>
                   </tbody>
           </Table>

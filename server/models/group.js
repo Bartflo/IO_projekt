@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ObjectId = require("mongodb").ObjectId;
+var ObjectId = require("mongodb").ObjectId;
 
 const GroupSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -7,5 +7,5 @@ const GroupSchema = new mongoose.Schema({
 })
 
 
-const Group = mongoose.modelNames("group", GroupSchema);
+const Group = mongoose.model("group", GroupSchema);
 module.exports = { Group };
