@@ -2,15 +2,9 @@ const router = require("express").Router();
 const { Test } = require("../models/test");
 
 router.post("/", async (req, res) => {
-	
-    
-    const name = req.body.name;
-    const questions = req.body.questions;
-    const questions2 = req.body.questions2;
-    const questions3 = req.body.questions3;
-    const test = new Test({name: name, questions: questions, questions2: questions2, questions3: questions3});
+	const name = req.body.name;
+    const test = new Test({name: name});
     try {
-        
         res.status(201).send({ message: "Test dodany do bazy" });
         await test.save();
            

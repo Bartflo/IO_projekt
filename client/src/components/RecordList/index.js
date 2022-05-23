@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
- 
+import Table from 'react-bootstrap/Table'
 const Record = (props) => (
  <tr>
-   <td>{props.record.content}</td>
+   {(props.record.type==1 && <td>{props.record.content}</td>) || ((props.record.type==2 || props.record.type==3) && <td>{props.record.content2.join(' ')}</td>)}
    {/* <td>{props.record.answer}</td> */}
     <td>
-   {Array.from(props.record.answer).map((answer, index) => (
+   {(props.record.type==1 && Array.from(props.record.answer).map((answer, index) => (
       <p key={index}>{answer}</p>
-    ))}
+    ))) || ((props.record.type==2 || props.record.type==3) && <p style={{color:"red"}}>Nie dotyczy</p>)}
     </td>
     {/* {props.record.correctAnswer} */}
    <td>
-     {Array.from(props.record.correctAnswer).map((correctAnswer,index)=>
-     <p key={index}>{props.record.answer[correctAnswer]}</p>)}
+     {(props.record.type==1 && Array.from(props.record.correctAnswer).map((correctAnswer,index)=>
+     <p key={index}>{props.record.answer[correctAnswer]}</p>)) || 
+     (props.record.type==3 && Array.from(props.record.correctAnswer).map((correctAnswer,index)=>
+     <p key={index}>{props.record.content2[correctAnswer]}</p>))|| 
+     (props.record.type==2 && <p style={{color:"red"}}>Nie dotyczy</p>)}
    </td>
-   <td>
-     <Link className="btn_edit" to={`/edit/${props.record._id}`}>Edit</Link> 
+    {(props.record.type==1 && <td>Wielokrotnego wyboru</td>) || (props.record.type==2 && <td>Odpowiednia kolejność</td>) || (props.record.type==3 && <td>Uzupełnianie luk</td>)}
+
+      <td>
+     {(props.record.type==1 && <Link className="btn_edit" to={`/edit_1/${props.record._id}`}>Edit</Link>) || (props.record.type==2 && <Link className="btn_edit" to={`/edit_2/${props.record._id}`}>Edit</Link>)
+     || (props.record.type==3 && <Link className="btn_edit" to={`/edit_3/${props.record._id}`}>Edit</Link>)} 
      <button className="btn_delete_answer"
        onClick={() => {
          props.deleteRecord(props.record._id);
@@ -79,17 +85,18 @@ export default function RecordList() {
  return (
    
    <div>
-     <table className="table">
+     <Table striped bordered hover size="sm">
        <thead>
          <tr>
            <th>Treść pytania</th>
            <th>Odpowiedzi</th>
            <th>Poprawne odpowiedzi</th>
+           <th>Typ pytania</th>
            <th>Akcja</th>
          </tr>
        </thead>
        <tbody>{recordList()}</tbody>
-     </table>
+     </Table>
    </div>
  );
 }

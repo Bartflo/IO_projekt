@@ -17,12 +17,6 @@ const Main = () => {
 	const handleQuestionChange = ({ currentTarget: input  }) => {
 		setData(data=>({ ...data, name:input.value }));
 	};
-	
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
-	};
-
 
 	const [error, setError] = useState("");
 	

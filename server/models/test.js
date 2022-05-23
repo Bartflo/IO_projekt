@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
-
+var ObjectId = require('mongodb').ObjectId;
 
 const TestSchema = new mongoose.Schema({
 	name: { type: String, required: true},
-	questions: [{type: mongoose.Schema.Types.ObjectId, ref: "question"}]
+	questions: [{type: ObjectId, ref: 'questions'}],
+	group: [{ type: ObjectId, ref: 'groups'}],
+	passing:{type: Number, default: 1}
 	});
 
 
