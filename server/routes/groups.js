@@ -55,23 +55,71 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/update/:id", async (req, res) => {
-    try {
+    try{
         const group = await Group.findById(req.params.id);
         if (!group) {
             return res.status(404).send({ message: "Test not found" });
         }
-        const updatedGroup = await Group.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
+        const updatedGroup = await Group.updateOne({
+            _id: req.params.id },
+            {
+                $addToSet: {"peoples": req.body.peoples}
+            });
         res.send(updatedGroup);
     } catch (error) {
-
         console.error(error);
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
+
+//pull one user from group.peoples
+router.put("/pull/:id/:user", async (req, res) => {
+    try{
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).send({ message: "Test not found" });
+        }
+        const updatedGroup = await Group.updateOne({
+            _id: req.params.id },
+            {
+                $pull: {"peoples": req.params.user}
+            });
+        res.send(updatedGroup);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+});
+
+
+
+
+
+
+
+
+
+//         })
+//     }
+
+//     // try {
+//     //     const group = await Group.findById(req.params.id);
+//     //     if (!group) {
+//     //         return res.status(404).send({ message: "Test not found" });
+//     //     }
+//     //     const updatedGroup = await Group.findByIdAndUpdate(
+//     //         req.params.id,
+//     //         req.body,
+//     //         { new: true }
+//     //     );
+//     //     res.send(updatedGroup);
+//     // } catch (error) {
+
+//     //     console.error(error);
+//     //     res.status(500).send({ message: "Internal Server Error" });
+//     // }
+// });
 
 router.delete("/delete/:id", async (req, res) => {
     try {

@@ -56,7 +56,8 @@ const EditGroup = () => {
     }, );
 
     const handleUserChange = ({ currentTarget: input  }) => {
-        setData(data=>({ ...data, peoples:input.value }));
+        setData(data=>({ ...data, peoples:input.value}));
+        console.log(data.peoples);
     };
 
     const handleSubmit = async (e) => {
@@ -90,6 +91,42 @@ const EditGroup = () => {
         console.log(data);
     };
 
+ //remove user from array of users using /api/group/pull/:id/:user
+    const handleRemoveUser = async (e) => {
+        e.preventDefault();
+        const id = params.id.toString();
+        const user = e.target.value;
+        const submitData = {id,user};
+        const url = `http://localhost:8080/api/group/pull/${id}/${user}`;
+        const options = {
+            method: 'PUT',
+            headers:
+            {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submitData),
+        };
+        fetch(url,options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(submitData => {
+                window.alert(`Użytkownik ${user} usunięty z grupy ${id}`);
+                window.location.reload(false);
+            })
+            .catch(err => {
+                window.alert(`An error has occurred: ${err.message}`);
+            });
+        console.log(data);
+    };
+
+
+
+        
+
     return(
     <div>
         <Row className="justify-content-md-center" xs="auto" style={{marginTop:"2rem"}}>
@@ -101,14 +138,22 @@ const EditGroup = () => {
                         <th>Imie</th>
                         <th>Nazwisko</th>
                         <th>Email</th>
+                        <th>Akcja</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map(user => (
-                        <tr key={user.id}>
+                    {group.peoples && Array.from(group.peoples).map(user => (
+                        <tr key={user._id}>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
                             <td>{user.email}</td>
+                            <td>
+                                <Button variant="danger" value={user._id} onClick={handleRemoveUser}>Usuń</Button>
+                            </td>
+
+
+
+
                         </tr>
                     ))}
                 </tbody>
@@ -117,20 +162,33 @@ const EditGroup = () => {
 
         </Col>
         <Col xs={3}>
-            <form onSubmit={handleSubmit} className="form_questions" autoComplete='off'>
-                <Form.Control
-                    list="users"
-                    onChange={handleUserChange}
-                    value={data.peoples}
+                <Form.Select onChange={handleUserChange}>
+                    <option>Wybierz osobę</option>
 
-                />
-                <datalist id="users">
+                    
+
+                    {/* show all users but not in group */}
+                    {users && Array.from(users).map(user => (
+                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
+                    ))}
+
+
+
+
+                    
+                    {/* {users.map(user=>{
+                        return(
+                        group.peoples && (user._id not in group.peoples) &&	
+                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
+                        )
+                    })} */}
+                    </Form.Select>
+                {/* <datalist id="users">
                     {users.map(user => (
                         <option key={user.id} value={user.id}>{user._id}</option>
                     ))}
-                </datalist>
-                <Button variant="primary" type="submit" style={{marginTop:"20px"}}>Dodaj</Button>
-            </form>
+                </datalist> */}
+                <Button variant="primary" onClick={handleSubmit} style={{marginTop:"20px"}}>Dodaj</Button>
         </Col>
         </Row>
     </div>
