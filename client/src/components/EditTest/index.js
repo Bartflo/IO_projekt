@@ -52,11 +52,9 @@ const TestsRecord = (props) => (
       questions:new Map,
     })
 
-    const [checked, setChecked] = React.useState(false);
 
    
     const handleQuestionChange = ({ currentTarget: input }) => {
-      setChecked(!checked);
       setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
     console.log(data.questions)
 
@@ -202,7 +200,7 @@ const TestsRecord = (props) => (
       const id = params.id.toString();
       const passing = pass.passing;
       const submitData = {id,passing};
-      const url = `http://localhost:8080/api/testslist/update/${id}`;
+      const url = `http://localhost:8080/api/testslist/update_group/${id}`;
       const options = {
           method: "PUT",
           headers: {
@@ -234,7 +232,7 @@ const TestsRecord = (props) => (
       const id = params.id.toString();
       const group = groupChange.group;
       const submitData = {id,group};
-      const url = `http://localhost:8080/api/testslist/update/${id}`;
+      const url = `http://localhost:8080/api/testslist/update_group/${id}`;
       const options = {
           method: "PUT",
           headers: {
@@ -262,6 +260,34 @@ const TestsRecord = (props) => (
 
     }
 
+    const handleQuestionRemove = async(e) => {
+      const id = params.id.toString();
+      const question = e.target.value;
+      const submitData = {id,question};
+      const url = `http://localhost:8080/api/testslist/pull/${id}/${question}`;
+      const options = {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+      };
+      fetch(url, options)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error(response.statusText);
+              }
+              return response.json();
+          })
+          .then((submitData) => {
+              window.alert(`Record o id ${id} zaktualizowany`);
+              window.location.reload(false);	
+              //navigate("/testslist");
+          })
+          .catch((err) => {
+              window.alert(`An error has occurred: ${err.message}`);
+          });
+    }
 
     const handleGroupChange = ({ currentTarget: input }) => {
       setGroupChange(groupChange=>({ ...groupChange, group:input.value}));
@@ -272,63 +298,39 @@ const TestsRecord = (props) => (
     return (
    
         <div>
-          <Row xs="auto">
+          <Row className="justify-content-md-center" xs="auto" style={{marginTop:"2rem"}}>
             <Col>
+            <h2 style={{color:"inherit"}}>Pytania w bazie</h2>
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
                   <th>Treść pytania</th>
-                  <th>Odpowiedzi</th>
-                  <th>Poprawne odpowiedzi</th>
-                  <th>Typ pytania</th>
                 </tr>
               </thead>
-              <tbody>{recordList()}
-              {Array.from(records).map((record,index) => {
-                  return (
-              <tr key={index} >
-
-                    <td key={index}>
-                   
-                      <input key={index} type="checkbox" value={record._id}  onChange={handleQuestionChange}
-                        name={record._id}></input>
-                        <label htmlFor={record._id}>{ (record.type==1 && record.content) || ((record.type==2 || record.type==3) && record.content2.join(' ')) }</label>
-                   
-                    </td>
-             </tr>
-              
-                  )
-                })
-              }
+              <tbody>
+                <Form.Select onChange={handleQuestionChange}>
+                <option>Wybierz pytanie</option>
+                {Array.from(records).map((record,index) => {
+                  return(
+                    <option key={index} value={record._id}>{ (record.type==1 && record.content) || ((record.type==2 || record.type==3) && record.content2.join(' ')) }</option>
+                  )})}
+                </Form.Select>
+                <Button variant="primary" onClick={handleSubmit} style={{marginTop:"20px"}}>Dodaj</Button>
               </tbody>
-
-              
+            
               
             </Table>
             </Col>
-            
-            <Col>
-          
-          
-          <Button style={{marginTop:200}} variant="outline-primary" onClick={handleSubmit}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-arrow-narrow-right" width="40" height="40" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <line x1="15" y1="16" x2="19" y2="12" />
-            <line x1="15" y1="8" x2="19" y2="12" />
-            </svg>
-          </Button>{' '}
-          
-          </Col>
           <Col>
           
-
+          <h2 style={{color:"inherit"}}>Test</h2>
           <Table striped bordered hover size="sm">
               <thead>
                   <tr>
                       <th>Nazwa testu</th>
                       <th>Max pkt.</th>
                       <th>Pytania w teście</th>
+                      <th>Akcja</th>
                       <th>Próg zaliczenia</th>
                       <th>Przypisz grupe</th>
                   </tr>
@@ -340,9 +342,15 @@ const TestsRecord = (props) => (
                     <td>
                       {test.questions && Array.from(test.questions).map((test,index) => {
                         return (
-                          (test.type == 1 && <p key={index}>{test.content}</p>) || ((test.type == 2 || test.type == 3) && <p key={index}>{test.content2.join(' ')}</p>)
+                          (test.type == 1 && <p key={index} >{test.content}</p>) || ((test.type == 2 || test.type == 3) && <p key={index}>{test.content2.join(' ')}</p>)
                         )}
                       )}
+                    </td>
+                    <td className="d-flex flex-column">
+                      {test.questions && Array.from(test.questions).map((test,index) => {
+                        return (
+                          (<Button key={index} variant="danger" onClick={handleQuestionRemove} style={{marginTop:"0.45rem"}}  value={test._id} size="sm">Usuń</Button>)
+                        )})}
                     </td>
                   <td>
                     {test.questions &&

@@ -83,7 +83,7 @@ const EditGroup = () => {
             })
             .then(submitData => {
                 window.alert(`Record o id ${id} zaktualizowany`);
-                window.location.reload(false);
+                // window.location.reload(false);
             })
             .catch(err => {
                 window.alert(`An error has occurred: ${err.message}`);
@@ -115,7 +115,7 @@ const EditGroup = () => {
             })
             .then(submitData => {
                 window.alert(`Użytkownik ${user} usunięty z grupy ${id}`);
-                window.location.reload(false);
+                // window.location.reload(false);
             })
             .catch(err => {
                 window.alert(`An error has occurred: ${err.message}`);
