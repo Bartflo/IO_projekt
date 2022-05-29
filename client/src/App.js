@@ -17,6 +17,8 @@ import Navbar from "./components/Navbar/index";
 import CreateGroup from "./components/CreateGroup/index";
 import GroupList from ".//components/GroupList/index";
 import EditGroup from "./components/EditGroup/index";
+import TestSolve from "./components/SolveTest/index";
+import YourTests from "./components/YourTests/index";
 import "./App.css";
 
 
@@ -41,7 +43,8 @@ function App() {
 			{user && <Route path="/create_group" element={<CreateGroup/>}/>}
 			{user && <Route path="/group_list" element={<GroupList/>}/>}
 			{user && <Route path="/edit_group/:id" element={<EditGroup/>}/>}
-
+			{user && <Route path="/your_tests" exact element={<YourTests/>}/>}
+			{user && <Route path="/test_solve/:id" exact element={<TestSolve/>}/>}
 
 
 			<Route path="/signup" exact element={<Signup />} />
