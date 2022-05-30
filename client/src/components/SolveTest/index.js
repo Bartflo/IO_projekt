@@ -37,8 +37,21 @@ import { useParams, useNavigate} from "react-router";
         return;
     }, );
 
-
-
+    if(test.questions){
+   
+        for(let i=0;i<test.questions.length;i++){
+            if(test.questions[i].type==3)
+            {
+              for(let j=0;j<test.questions[i].content2.length;j++){
+                console.log(test.questions[i].content2[j])
+              }
+          
+              }
+            }  
+        }
+      
+    
+  
 
     return (
    
@@ -60,21 +73,9 @@ import { useParams, useNavigate} from "react-router";
                             )}</p>) 
                         )}
                       )}
-                      {test.questions && Array.from(test.questions).map((test,index) => {
-                        return(
-                          (test.type==3 && <p key={index}>Uzupełnij luki 
-                          
-                          {test.content2.map((test,index) =>{
-                          
-                            return <p>
-                                {(test.items || []).every(item => [index!=correctAnswer]) && <p>test</p> }
-                              </p>
-                            }
-                        
-                            )}
-                          </p>)
-                        )
-                      })}
+                      {}                      
+                      
+                      
         </div>
 
         
