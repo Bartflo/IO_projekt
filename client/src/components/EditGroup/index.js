@@ -169,7 +169,7 @@ const EditGroup = () => {
 
                     {/* show all users but not in group */}
                     {users && Array.from(users).map(user => (
-                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
+                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}({user.email})</option>
                     ))}
 
 

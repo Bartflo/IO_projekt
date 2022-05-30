@@ -12,10 +12,17 @@ import { useParams, useNavigate} from "react-router";
     const [test, setTest] = useState({
       name:""
    });
-
+   const [data, setData] = useState({
+		answerType2:new Map,
+    answerType3:new Map,
+    
+	});
    const params = useParams();
 
-
+   const handleTextChange = ({ currentTarget: input }) => {
+		setData(data=>({ ...data, content:input.value }));
+		console.log(data.content)
+	};	
 
 
     useEffect(() => {
@@ -37,19 +44,7 @@ import { useParams, useNavigate} from "react-router";
         return;
     }, );
 
-    if(test.questions){
-   
-        for(let i=0;i<test.questions.length;i++){
-            if(test.questions[i].type==3)
-            {
-              for(let j=0;j<test.questions[i].content2.length;j++){
-                console.log(test.questions[i].content2[j])
-              }
-          
-              }
-            }  
-        }
-      
+  
     
   
 
@@ -73,7 +68,35 @@ import { useParams, useNavigate} from "react-router";
                             )}</p>) 
                         )}
                       )}
-                      {}                      
+                      {test.questions && Array.from(test.questions).map((test,index) => {
+                        return (
+                          (test.type == 3 && <p key={index} >
+                            <h1>
+
+                            {test.content2.map((item,index)=>
+                            {
+                              return(
+                                  <div>
+                                    {test.correctAnswer.includes(index) ? (
+                                     <input type="text" placeholder="luka" className="login_register_input" onChange={handleTextChange}></input>
+                                    ) : (
+                                      <p>{test.content2[index]}</p>
+                                      
+                                    )}
+                                  </div>
+                                
+                              
+                              
+                              )
+                            })}
+
+                            
+                            
+                                                        
+                            
+                            {}</h1> </p>) 
+                        )}
+                      )}  
                       
                       
         </div>

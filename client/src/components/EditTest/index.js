@@ -328,17 +328,18 @@ const TestsRecord = (props) => (
               <thead>
                   <tr>
                       <th>Nazwa testu</th>
-                      <th>Max pkt.</th>
+                      <th>Pkt. zaliczenie/Max.</th>
                       <th>Pytania w teście</th>
                       <th>Akcja</th>
                       <th>Próg zaliczenia</th>
+                      <th>Przypisana grupa</th>
                       <th>Przypisz grupe</th>
                   </tr>
               </thead>
               <tbody>{Testlist()}
                   <tr>
                     <td>{test.name}</td>
-                    <td>{test.questions && test.questions.length}</td>
+                    <td>{test.questions && `${test.passing}/${test.questions.length}`}</td>
                     <td>
                       {test.questions && Array.from(test.questions).map((test,index) => {
                         return (
@@ -357,6 +358,12 @@ const TestsRecord = (props) => (
                     <input type="number" name="passing" min="1" max={test.questions.length} value={pass.passing} onChange={handleChange}></input>
                     }
                     <button onClick={handlePassSumbit}>Zapisz</button>
+                  </td>
+                  <td>
+                    {test.group && Array.from(test.group).map((group,index) => {
+                      return (
+                        <p key={index}>{group.name}</p>
+                      )})}
                   </td>
                   <td>
                     <Form.Select onChange={handleGroupChange}>
