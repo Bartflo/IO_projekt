@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate} from "react-router";
-import Table from 'react-bootstrap/Table'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
 
 
@@ -54,14 +49,36 @@ import Form from 'react-bootstrap/Form'
     
                       {test.questions && Array.from(test.questions).map((test,index) => {
                         return (
-                          (test.type == 1 && <p key={index} >{test.content}</p>) || ((test.type == 2 || test.type == 3) && <p key={index}>{test.content2.join(' ')}</p>)
+                          (test.type == 1 && <p key={index} ><h1>{test.content}</h1> {test.answer.map((test,index) =>{
+                            return <div key={index} className="correctAnswer_container action"><label>
+                                <input type="checkbox" key={index} value={index} />
+                                <span>{test}</span>
+                              </label>
+                              </div>
+                          }
+                            
+                            )}</p>) 
                         )}
                       )}
-             
+                      {test.questions && Array.from(test.questions).map((test,index) => {
+                        return(
+                          (test.type==3 && <p key={index}>Uzupełnij luki 
+                          
+                          {test.content2.map((test,index) =>{
+                          
+                            return <p>
+                                {(test.items || []).every(item => [index!=correctAnswer]) && <p>test</p> }
+                              </p>
+                            }
+                        
+                            )}
+                          </p>)
+                        )
+                      })}
         </div>
 
         
       );
        
-}
+} 
 
