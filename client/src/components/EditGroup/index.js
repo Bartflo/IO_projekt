@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+
 const EditGroup = () => {
 
     const [users,setUsers] = useState([]);
@@ -15,6 +16,7 @@ const EditGroup = () => {
         peoples:"",
     });
     const params = useParams();
+    
 
     useEffect(() => {
         async function getUsers() {
@@ -124,11 +126,14 @@ const EditGroup = () => {
     };
 
 
-
+    
         
 
     return(
     <div>
+
+        
+        
         <Row className="justify-content-md-center" xs="auto" style={{marginTop:"2rem"}}>
         <Col>
             <h3>Użytkownicy w grupie</h3>
@@ -172,7 +177,8 @@ const EditGroup = () => {
                         return(
                             <>
                             {group.peoples && Array.from(group.peoples).map((group,index) => {
-                                console.log(group._id.includes(user._id))
+                              
+                             
                                 return(
                                     <>
                                 {group._id.includes(user._id) ?(

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate} from "react-router";
-
-
+import SortableList, { SortableItem } from 'react-easy-sort'
+import arrayMove from 'array-move'
+import './styles.css'
 
 
   
@@ -19,10 +20,112 @@ import { useParams, useNavigate} from "react-router";
 	});
    const params = useParams();
 
+   const [items, setItems] = useState([]
+
+   );
+   const [currentQuestion, setCurrentQuestion] = useState(0)
+   
+   const handleNextClick = () => {
+      const nextQuetions = currentQuestion + 1;
+      if (test.questions && nextQuetions < test.questions.length) {
+      setCurrentQuestion(nextQuetions);
+      
+
+    }
+  }
+  console.log(currentQuestion);
+
+    const onSortEnd = (oldIndex, newIndex) => {
+        setItems((array) => arrayMove(array, oldIndex, newIndex))
+      }
+
+
    const handleTextChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data, content:input.value }));
 		console.log(data.content)
 	};	
+
+
+  const functionWithSwitch = (test) => {
+    
+    switch(test.questions[currentQuestion].type){
+      case 1:
+ 
+      return test.questions[currentQuestion] &&
+                  <>{test.questions[currentQuestion].content}
+                  {Array.from(test.questions[currentQuestion]).map((answer, index) => {
+                    return(
+                    <div key={index}>
+                      <input type="radio" name={index} value={answer}/>
+                      {console.log(answer)}
+                    </div>
+                    )
+                    })}
+                  </>
+
+      
+      // (
+            // <h1>{test.questions[currentQuestion].content} {test.questions[currentQuestion].answers.map((test,index) =>{
+            //   return <div key={index} className="correctAnswer_container action"><label>
+            //       <input type="checkbox" key={index} value={index} />
+            //       <span>{test[currentQuestion]}</span>
+            //       {console.log(test[currentQuestion])}
+            //     </label>
+            //     </div>
+            // }
+              
+            //   )}</h1>) 
+          
+        
+      case 2: 
+        return  <SortableList
+        onSortEnd={onSortEnd}
+        className="list"
+        draggedItemClassName="dragged"
+      >
+        {items && Array.from(items).map((item) => (
+          <SortableItem key={item}>
+            <div className="item">{item}</div>
+          </SortableItem>
+        ))}
+       {console.log(items)}
+      </SortableList>
+      
+      case 3:
+        return test.questions && Array.from(test.questions).map((test,index) => {
+          return (
+            (test.type == 3 && <p key={index} >
+              <h1>
+
+              {test.content2.map((item,index)=>
+              {
+                return(
+                    <div>
+                      {test.correctAnswer.includes(index) ? (
+                       <input type="text" placeholder="luka" className="login_register_input" onChange={handleTextChange}></input>
+                      ) : (
+                        <p>{test.content2[index]}</p>
+                        
+                      )}
+                    </div>
+                  
+                
+                
+                )
+              })}
+
+              
+              
+                                          
+              
+              {}</h1> </p>) 
+          )}
+        )
+
+      default:
+        return "neutral"
+    }
+  }
 
 
     useEffect(() => {
@@ -36,15 +139,28 @@ import { useParams, useNavigate} from "react-router";
                 return;
             }
             const test = await response.json();
+
             
             setTest(test);
+              
+            
+            for(let x=0; x<test.questions.length; x++){  
+            
+              if(test.questions[x].type==2){
+         
+                setItems([test.questions[x].content2]);
+              
+              }  
+            }
+            console.log(items)
+                       
         }
 
         getTest();
         return;
-    }, );
+    }, []);
 
-  
+    
     
   
 
@@ -52,6 +168,47 @@ import { useParams, useNavigate} from "react-router";
    
         <div>
           
+          
+          {test.questions&& functionWithSwitch(test)}    
+             
+          <button onClick={handleNextClick}>Next</button>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          {/* <SortableList
+      onSortEnd={onSortEnd}
+      className="list"
+      draggedItemClassName="dragged"
+    >
+      {items && Array.from(items).map((item) => (
+        <SortableItem key={item}>
+          <div className="item">{item}</div>
+        </SortableItem>
+      ))}
+    </SortableList>
+    { console.log(items)}
                       <th>Pytania w teście</th>
         
     
@@ -97,7 +254,7 @@ import { useParams, useNavigate} from "react-router";
                             {}</h1> </p>) 
                         )}
                       )}  
-                      
+                       */}
                       
         </div>
 
