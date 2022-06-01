@@ -53,7 +53,7 @@ const EditGroup = () => {
 
         getGroup();
         return;
-    }, );
+    },);
 
     const handleUserChange = ({ currentTarget: input  }) => {
         setData(data=>({ ...data, peoples:input.value}));
@@ -168,9 +168,66 @@ const EditGroup = () => {
                     
 
                     {/* show all users but not in group */}
-                    {users && Array.from(users).map(user => (
-                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}({user.email})</option>
-                    ))}
+                    {users && Array.from(users).map(user => {
+                        return(
+                            <>
+                            {group.peoples && Array.from(group.peoples).map((group,index) => {
+                                console.log(group._id.includes(user._id))
+                                return(
+                                    <>
+                                {group._id.includes(user._id) ?(
+                                    <option key={index} value={user._id} disabled>{user.firstName} {user.lastName}</option>
+                                )
+                                :
+                                (
+                                    <option key={index} value={user._id}>{user.firstName} {user.lastName}</option>
+                                )
+                                }
+                                </>
+                                )
+                            })}
+                            </>
+                        )
+                    })}
+
+                    
+
+                    {/* {console.log(users[0]._id)} */}
+                        
+
+                    
+
+                    {/* {group.peoples && users && Array.from(users).map((user,index)=>
+                            {
+                              return(
+                                  <div>
+                                    {group.peoples.includes(user._id) ? (
+                                     <option key={user._id} value={user._id} disabled>{user.firstName} {user.lastName}({user.email})</option>
+                                    // <p>xd</p>
+                                    ) : (
+                                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}({user.email})</option>
+                                    //   <p>ppp</p>
+                                    )}
+                                  </div>
+                                
+                              
+                              
+                              )
+                            })} */}
+                            {/* {console.log(group.peoples&& group.peoples[0]._id)} */}
+                            {/* {console.log(users)} */}
+
+                    {/* // {users && Array.from(users).map(user => (
+                    //     {
+                    // return(
+                    //     {group.peoples.includes(user._id) ? (
+                    //     <option key={user._id} value={user._id} disabled>{user.firstName} {user.lastName}({user.email})</option>
+                    //     ) : (
+                    //         <option key={user._id} value={user._id}>{user.firstName} {user.lastName}({user.email})</option>
+                    //     )}
+                    // )
+                    
+                    // ))} */}
 
 
 
