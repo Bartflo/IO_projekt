@@ -20,7 +20,7 @@ import './styles.css'
 	});
    const params = useParams();
 
-   const [items, setItems] = useState([]
+   const [items, setItems] = useState([[]]
 
    );
    const [currentQuestion, setCurrentQuestion] = useState(0)
