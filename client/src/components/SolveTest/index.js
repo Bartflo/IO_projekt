@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { useParams, useNavigate} from "react-router";
 import SortableList, { SortableItem } from 'react-easy-sort'
 import arrayMove from 'array-move'
@@ -20,6 +20,8 @@ import './styles.css'
 	});
    const params = useParams();
 
+   const [currentDrag, setCurrentDrag] = useState(0);
+
    const [items, setItems] = useState([]
 
    );
@@ -29,15 +31,20 @@ import './styles.css'
    const handleNextClick = () => {
       const nextQuetions = currentQuestion + 1;
       if (test.questions && nextQuetions < test.questions.length) {
-      setCurrentQuestion(nextQuetions);
+        if(test.questions[currentQuestion].type == 2){
+          setCurrentDrag(currentDrag + 1);
+        
     }
-
+    setCurrentQuestion(nextQuetions);
   }
-  console.log(currentQuestion);
+}
 
-    const onSortEnd = (oldIndex, newIndex) => {
-        setItems((array) => arrayMove(array, oldIndex, newIndex))
-      }
+
+
+    const onSortEnd = forwardRef((e, { oldIndex, newIndex }) => {
+      setItems(arrayMove(items, oldIndex, newIndex));
+    }
+    );
 
 
    const handleTextChange = ({ currentTarget: input }) => {
@@ -86,18 +93,21 @@ import './styles.css'
         
       case 2: 
         return  <SortableList
+        
         onSortEnd={onSortEnd}
         className="list"
         draggedItemClassName="dragged"
       >
-        {items[1].content2.map((item) => {
+        {items[currentDrag].content2.map((item) => {
             return(
                 <SortableItem key={item}>
                     <div className="item">{item}</div>
 
                 </SortableItem>
             )})}
-            {console.log(items[1].content2)}
+            
+            {console.log(items)}
+            {console.log(currentDrag)}
       </SortableList>
 
       case 3:
