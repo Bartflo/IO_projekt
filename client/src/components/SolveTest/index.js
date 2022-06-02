@@ -20,18 +20,18 @@ import './styles.css'
 	});
    const params = useParams();
 
-   const [items, setItems] = useState([[]]
+   const [items, setItems] = useState([]
 
    );
-   const [currentQuestion, setCurrentQuestion] = useState(0)
+   const [currentQuestion, setCurrentQuestion] = useState(0);
+
    
    const handleNextClick = () => {
       const nextQuetions = currentQuestion + 1;
       if (test.questions && nextQuetions < test.questions.length) {
       setCurrentQuestion(nextQuetions);
-      
-
     }
+
   }
   console.log(currentQuestion);
 
@@ -50,20 +50,27 @@ import './styles.css'
     
     switch(test.questions[currentQuestion].type){
       case 1:
- 
-      return test.questions[currentQuestion] &&
-                  <>{test.questions[currentQuestion].content}
-                  {Array.from(test.questions[currentQuestion]).map((answer, index) => {
-                    return(
-                    <div key={index}>
-                      <input type="radio" name={index} value={answer}/>
-                      {console.log(answer)}
-                    </div>
-                    )
-                    })}
-                  </>
+          return <>{test.questions[currentQuestion].content}
+              {test.questions[currentQuestion].answer.map((answer, index) => {
+        return(
+            <div className="correctAnswer_container action"><label>
+                         <input type="checkbox" name="answer" key={index} value={index} />
+                         <span>{answer}</span>
+                         {console.log(answer)}
+                       </label>
+                       </div>
+        )
+              })}</>
 
-      
+        // return <h1>{test.questions[currentQuestion] && Array.from(test.questions[currentQuestion]).map((test, index) => {
+      //                 return (
+      //                     <>
+      //                     {console.log(test)}
+      //                         <p>{test}</p>
+      //                     </>
+      //                     )
+      //             })}</h1>
+      //
       // (
             // <h1>{test.questions[currentQuestion].content} {test.questions[currentQuestion].answers.map((test,index) =>{
             //   return <div key={index} className="correctAnswer_container action"><label>
@@ -83,14 +90,16 @@ import './styles.css'
         className="list"
         draggedItemClassName="dragged"
       >
-        {items && Array.from(items).map((item) => (
-          <SortableItem key={item}>
-            <div className="item">{item}</div>
-          </SortableItem>
-        ))}
-       {console.log(items)}
+        {items[1].content2.map((item) => {
+            return(
+                <SortableItem key={item}>
+                    <div className="item">{item}</div>
+
+                </SortableItem>
+            )})}
+            {console.log(items[1].content2)}
       </SortableList>
-      
+
       case 3:
         return test.questions && Array.from(test.questions).map((test,index) => {
           return (
@@ -144,18 +153,13 @@ import './styles.css'
             setTest(test);
               
             
-            for(let x=0; x<test.questions.length; x++){  
-            
-              if(test.questions[x].type==2){
-         
-                setItems([test.questions[x].content2]);
-              
-              }  
-            }
-            console.log(items)
+
+
+            setItems(test.questions.filter(item => item.type == 2))
+
                        
         }
-
+        console.log(items)
         getTest();
         return;
     }, []);
