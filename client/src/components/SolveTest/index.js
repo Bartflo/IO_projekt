@@ -8,15 +8,20 @@ import './styles.css'
 
 export default function EditTest() {
 
+    
+
     const [test, setTest] = useState({
         name: ""
     });
     const [data, setData] = useState({
+        answerType1: new Map,
         answerType2: new Map,
         answerType3: new Map,
 
     });
     const params = useParams();
+
+    const [points,setPoints] = useState(0);
 
     const [currentDrag, setCurrentDrag] = useState(0);
 
@@ -27,36 +32,71 @@ export default function EditTest() {
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
     
-
+    
   
 
     const handleNextClick = () => {
         const nextQuetions = currentQuestion + 1;
+        
         if (test.questions && nextQuetions < test.questions.length) {
           if(test.questions[nextQuetions].type==2){
-            setCurrentItem(items[currentDrag].content2)
+            setCurrentItem(items[currentDrag].content2.sort(() => Math.random() - 0.5))
+
+
           }  
           if (test.questions[currentQuestion].type == 2) {
-            if(test.questions && currentDrag +1< Object.keys(test.questions.filter(item => item.type == 2)).length){
-                setCurrentDrag(currentDrag + 1);
-                setCurrentItem(items[currentDrag + 1].content2)
-                console.log(currentDrag)
-            }
-        
-        
-            }
-            setCurrentQuestion(nextQuetions);
-        } else {
-            
-        }
-    }
+          
+              
+            if(currentItem === test.questions[currentQuestion].content2){
+                setPoints(points+1)
 
+            }
+            
+            if(test.questions && currentDrag +1< Object.keys(test.questions.filter(item => item.type == 2)).length){
+                
+                
+                setCurrentDrag(currentDrag + 1);
+                setCurrentItem(items[currentDrag + 1].content2.sort(() => Math.random() - 0.5))
+           
+            }
+            
+        
+            }
+            if(test.questions[currentQuestion].type==1){
+                
+
+                
+                if(data.answerType1.size==test.questions[currentQuestion].correctAnswer.length){
+                   const values = Array.from(data.answerType1.values())
+                        
+
+                   if(values.sort().join(',')=== test.questions[currentQuestion].correctAnswer.sort().join(',')){
+                    setPoints(points+1)
+
+                }
+                
+            }
+            
+            setData(data=>({ ...data, answerType1:new Map}));
+            document.querySelectorAll('input[type=checkbox]').forEach(item => item.checked = false);
+
+            
+        } 
+        
+        setCurrentQuestion(nextQuetions);
+     }
+    }
 
     const handleTextChange = ({currentTarget: input}) => {
         setData(data => ({...data, content: input.value}));
-        console.log(data.content)
+  
     };
-
+    const handleCheckChange = ({currentTarget: input}) => {
+        setData(data=>({ ...data,  answerType1:data.answerType1.set(input.name,input.value)}));
+        
+       
+    };
+    
 
     const functionWithSwitch = (test) => {
 
@@ -66,9 +106,11 @@ export default function EditTest() {
                     {test.questions[currentQuestion].answer.map((answer, index) => {
                         return (
                             <div className="correctAnswer_container action" key={index}><label>
-                                <input type="checkbox" name="answer" key={index} value={index}/>
+                                <input type="checkbox" name={answer} key={index} value={index} onChange={handleCheckChange} id="checkbox" />
+                               
+                               
                                 <span>{answer}</span>
-                                {console.log(answer)}
+                               
                             </label>
                             </div>
                         )
@@ -166,7 +208,7 @@ export default function EditTest() {
 
         }
 
-        console.log(items)
+       
         getTest();
         
         return;
@@ -179,7 +221,7 @@ export default function EditTest() {
     const onSortEnd = (oldIndex, newIndex) => {
 
         setCurrentItem((currentItem) => arrayMove(currentItem, oldIndex, newIndex))
-        console.log(currentItem)
+       
     }
 
    
@@ -189,6 +231,7 @@ export default function EditTest() {
     return (
 
         <div className="d-flex justify-content-center">
+            {console.log(points)}
             <div className="d-flex justify-content-md-center w-50 p-3">
             <Col md={3}>
             {test.questions && functionWithSwitch(test)}
