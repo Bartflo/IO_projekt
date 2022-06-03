@@ -2,6 +2,7 @@ import React, {useState, useEffect, forwardRef} from "react";
 import {useParams, useNavigate} from "react-router";
 import SortableList, {SortableItem} from 'react-easy-sort'
 import arrayMove from 'array-move'
+import Col from 'react-bootstrap/Col'
 import './styles.css'
 
 
@@ -61,7 +62,7 @@ export default function EditTest() {
 
         switch (test.questions[currentQuestion].type) {
             case 1:
-                return <>{test.questions[currentQuestion].content}
+                return <div className="d-flex flex-column">{test.questions[currentQuestion].content}
                     {test.questions[currentQuestion].answer.map((answer, index) => {
                         return (
                             <div className="correctAnswer_container action" key={index}><label>
@@ -71,7 +72,7 @@ export default function EditTest() {
                             </label>
                             </div>
                         )
-                    })}</>
+                    })}</div>
 
 
             case 2:
@@ -97,17 +98,17 @@ export default function EditTest() {
                 return <>
                 {test.questions[currentQuestion].content2.map((content2, index) => {
                     return (
-                        <div key={index}>
+                        <div key={index} className="d-flex flex-row">
                                                 {test.questions[currentQuestion].correctAnswer.includes(index) ? (
                                                     <input type="text" placeholder="luka" className="login_register_input" key={index}
                                                            onChange={handleTextChange}></input>
                                                 ) : (
-                                                    <p>{content2}</p>       
+                                                    <p>{content2}</p>
 
                                                 )}
                                             </div>
                     )
-                })}</>    
+                })}</>
             // return test.questions && Array.from(test.questions).map((test, index) => { 
                 //         return (
                 //             (test.type == 3 && <p key={index}>
@@ -187,15 +188,14 @@ export default function EditTest() {
 
     return (
 
-        <div>
-
-            
+        <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-md-center w-50 p-3">
+            <Col md={3}>
             {test.questions && functionWithSwitch(test)}
-         
-        
+            </Col>
+            </div>
 
-            <button onClick={handleNextClick}>Next</button>
-
+            <button className="w-25" onClick={handleNextClick}>Next</button>
 
         </div>
 

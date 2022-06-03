@@ -107,7 +107,7 @@
 .correctAnswer_container label
 {
 	float: left; line-height: 3.0em;
-	width: 8.0em; height: 3.0em;
+	width: 100%; height: 3.0em;
 }
 
 .correctAnswer_container span

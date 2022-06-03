@@ -23,6 +23,7 @@ const Navigation_bar = () => {
             <Nav.Link><Link to="/recordlist" style={{textDecoration:"none",color:"inherit"}}>Rekordy</Link></Nav.Link>
             <Nav.Link><Link to="/testslist" style={{textDecoration:"none",color:"inherit"}}>Testy</Link></Nav.Link>
             <Nav.Link><Link to="group_list" style={{textDecoration:"none",color:"inherit"}}>Grupy</Link></Nav.Link>
+            <Nav.Link><Link to="/your_tests" style={{textDecoration:"none",color:"inherit"}}>Testy do rozwiązania</Link></Nav.Link>
             <NavDropdown title="Dodaj" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="/questions" style={{textDecoration:"none",color:"inherit"}}>Pytanie zamknięte</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="/questions2" style={{textDecoration:"none",color:"inherit"}}>Pytanie kolejność</Link></NavDropdown.Item>
