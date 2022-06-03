@@ -20,11 +20,14 @@ export default function EditTest() {
     const [currentDrag, setCurrentDrag] = useState(0);
 
 
+
     const [items, setItems] = useState([]
     );
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
+    
 
+  
 
     const handleNextClick = () => {
         const nextQuetions = currentQuestion + 1;
@@ -33,9 +36,13 @@ export default function EditTest() {
             setCurrentItem(items[currentDrag].content2)
           }  
           if (test.questions[currentQuestion].type == 2) {
-              setCurrentDrag(currentDrag + 1);
+            if(test.questions && currentDrag +1< Object.keys(test.questions.filter(item => item.type == 2)).length){
+                setCurrentDrag(currentDrag + 1);
                 setCurrentItem(items[currentDrag + 1].content2)
                 console.log(currentDrag)
+            }
+        
+        
             }
             setCurrentQuestion(nextQuetions);
         } else {
@@ -57,7 +64,7 @@ export default function EditTest() {
                 return <>{test.questions[currentQuestion].content}
                     {test.questions[currentQuestion].answer.map((answer, index) => {
                         return (
-                            <div className="correctAnswer_container action"><label>
+                            <div className="correctAnswer_container action" key={index}><label>
                                 <input type="checkbox" name="answer" key={index} value={index}/>
                                 <span>{answer}</span>
                                 {console.log(answer)}
@@ -87,32 +94,46 @@ export default function EditTest() {
                 </SortableList>
 
             case 3:
-                return test.questions && Array.from(test.questions).map((test, index) => {
-                        return (
-                            (test.type == 3 && <p key={index}>
-                                <h1>
-
-                                    {test.content2.map((item, index) => {
-                                        return (
-                                            <div>
-                                                {test.correctAnswer.includes(index) ? (
-                                                    <input type="text" placeholder="luka" className="login_register_input"
+                return <>
+                {test.questions[currentQuestion].content2.map((content2, index) => {
+                    return (
+                        <div key={index}>
+                                                {test.questions[currentQuestion].correctAnswer.includes(index) ? (
+                                                    <input type="text" placeholder="luka" className="login_register_input" key={index}
                                                            onChange={handleTextChange}></input>
                                                 ) : (
-                                                    <p>{test.content2[index]}</p>
+                                                    <p>{content2}</p>       
 
                                                 )}
                                             </div>
+                    )
+                })}</>    
+            // return test.questions && Array.from(test.questions).map((test, index) => { 
+                //         return (
+                //             (test.type == 3 && <p key={index}>
+                //                 <h1>
+
+                //                     {test.content2.map((item, index) => {
+                //                         return (
+                //                             <div>
+                //                                 {test.correctAnswer.includes(index) ? (
+                //                                     <input type="text" placeholder="luka" className="login_register_input"
+                //                                            onChange={handleTextChange}></input>
+                //                                 ) : (
+                //                                     <p>{test.content2[index]}</p>
+
+                //                                 )}
+                //                             </div>
 
 
-                                        )
-                                    })}
+                //                         )
+                //                     })}
 
 
-                                    {}</h1></p>)
-                        )
-                    }
-                )
+                //                     {}</h1></p>)
+                //         )
+                //     }
+                // )
               
               
                 
@@ -135,7 +156,7 @@ export default function EditTest() {
             }
             const test = await response.json();
 
-
+            
             setTest(test);
 
 
@@ -146,6 +167,7 @@ export default function EditTest() {
 
         console.log(items)
         getTest();
+        
         return;
     }, []);
 
@@ -161,15 +183,7 @@ export default function EditTest() {
 
    
     
-  useEffect(() => {
-    
-    if(items&&currentItem &&test && test.questions && currentDrag){
-      setCurrentItem(items[currentDrag].content2)
-      console.log("dupa")
-    
- 
-  }
-  }, [])
+
 
     return (
 
@@ -177,6 +191,8 @@ export default function EditTest() {
 
             
             {test.questions && functionWithSwitch(test)}
+         
+        
 
             <button onClick={handleNextClick}>Next</button>
 
