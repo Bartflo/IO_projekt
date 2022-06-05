@@ -30,24 +30,47 @@ export default function EditTest() {
     const [items, setItems] = useState([]
     );
 
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    
+
+    function shuffle(array) {
+        let currentIndex = array.length,  randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex != 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
+    }
     
   
 
     const handleNextClick = () => {
         const nextQuetions = currentQuestion + 1;
-        
-        if (test.questions && nextQuetions < test.questions.length) {
-          if(test.questions[nextQuetions].type==2){
-            setCurrentItem(items[currentDrag].content2.sort(() => Math.random() - 0.5))
 
+        if (test.questions && nextQuetions < test.questions.length) {
+
+            if(test.questions[nextQuetions].type==2){
+
+              setCurrentItem(items[currentDrag].content2);
+              setUnshuffledItems(items[currentDrag].content2.slice());
+              setCurrentItem(shuffle(items[currentDrag].content2));
 
           }  
           if (test.questions[currentQuestion].type == 2) {
-          
+
               
-            if(currentItem === test.questions[currentQuestion].content2){
+            if(JSON.stringify(currentItem) === JSON.stringify(UnshuffledItems)){
+
+
                 setPoints(points+1)
 
             }
@@ -56,11 +79,17 @@ export default function EditTest() {
                 
                 
                 setCurrentDrag(currentDrag + 1);
-                setCurrentItem(items[currentDrag + 1].content2.sort(() => Math.random() - 0.5))
+                setCurrentItem(items[currentDrag + 1].content2)
+                setUnshuffledItems(items[currentDrag + 1].content2.slice())
+                setCurrentItem(shuffle(items[currentDrag + 1].content2))
+
+
+
+
            
             }
-            
-        
+
+             
             }
             if(test.questions[currentQuestion].type==1){
                 
@@ -85,6 +114,8 @@ export default function EditTest() {
         
         setCurrentQuestion(nextQuetions);
      }
+
+
     }
 
     const handleTextChange = ({currentTarget: input}) => {
@@ -217,6 +248,7 @@ export default function EditTest() {
 
     const [currentItem, setCurrentItem] = useState({});
 
+    const [UnshuffledItems, setUnshuffledItems] = useState({});
 
     const onSortEnd = (oldIndex, newIndex) => {
 
@@ -232,9 +264,12 @@ export default function EditTest() {
 
         <div className="d-flex justify-content-center">
             {console.log(points)}
+
+
             <div className="d-flex justify-content-md-center w-50 p-3">
             <Col md={3}>
             {test.questions && functionWithSwitch(test)}
+
             </Col>
             </div>
 
