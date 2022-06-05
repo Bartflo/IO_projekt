@@ -132,7 +132,15 @@ export default function EditTest() {
 
             setCurrentQuestion(nextQuetions);
      }
+    else{
+        if(points>=test.passing){
+            alert(`You have Passed the test. You got ${points} points out of ${test.questions.length}`)
+        }
+        else{
+            alert(`You have Failed the test. You got ${points} points out of ${test.questions.length}`)
+        }
 
+    }
 
     }
 
