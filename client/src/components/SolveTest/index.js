@@ -15,7 +15,6 @@ export default function EditTest() {
     });
     const [data, setData] = useState({
         answerType1: new Map,
-        answerType2: new Map,
         answerType3: new Map,
 
     });
@@ -89,7 +88,7 @@ export default function EditTest() {
            
             }
 
-             
+
             }
             if(test.questions[currentQuestion].type==1){
                 
@@ -110,16 +109,35 @@ export default function EditTest() {
             document.querySelectorAll('input[type=checkbox]').forEach(item => item.checked = false);
 
             
-        } 
-        
-        setCurrentQuestion(nextQuetions);
+        }
+            if(test.questions[currentQuestion].type==3){
+                const values = Array.from(data.answerType3.values())
+                test.questions[currentQuestion].correctAnswer.sort();
+                values.sort();
+                var correct=0;
+                test.questions[currentQuestion].correctAnswer.forEach( (item , index) =>{
+
+
+                    
+                        if(test.questions[currentQuestion].content2[item]=== values[index] ){
+                        correct++;
+                    }
+
+                }
+                )
+                if(correct==test.questions[currentQuestion].correctAnswer.length){
+                    setPoints(points+1)
+                }
+            }
+
+            setCurrentQuestion(nextQuetions);
      }
 
 
     }
 
     const handleTextChange = ({currentTarget: input}) => {
-        setData(data => ({...data, content: input.value}));
+        setData(data => ({...data, answerType3: data.answerType3.set(input.name, input.value)}));
   
     };
     const handleCheckChange = ({currentTarget: input}) => {
@@ -173,7 +191,7 @@ export default function EditTest() {
                     return (
                         <div key={index} className="d-flex flex-row">
                                                 {test.questions[currentQuestion].correctAnswer.includes(index) ? (
-                                                    <input type="text" placeholder="luka" className="login_register_input" key={index}
+                                                    <input type="text" placeholder="luka" className="login_register_input" name={index} key={index}
                                                            onChange={handleTextChange}></input>
                                                 ) : (
                                                     <p>{content2}</p>
