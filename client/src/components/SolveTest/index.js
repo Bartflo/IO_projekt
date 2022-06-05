@@ -4,7 +4,7 @@ import SortableList, {SortableItem} from 'react-easy-sort'
 import arrayMove from 'array-move'
 import Col from 'react-bootstrap/Col'
 import './styles.css'
-
+import Button from 'react-bootstrap/Button'
 
 export default function EditTest() {
 
@@ -208,36 +208,6 @@ export default function EditTest() {
                                             </div>
                     )
                 })}</>
-            // return test.questions && Array.from(test.questions).map((test, index) => { 
-                //         return (
-                //             (test.type == 3 && <p key={index}>
-                //                 <h1>
-
-                //                     {test.content2.map((item, index) => {
-                //                         return (
-                //                             <div>
-                //                                 {test.correctAnswer.includes(index) ? (
-                //                                     <input type="text" placeholder="luka" className="login_register_input"
-                //                                            onChange={handleTextChange}></input>
-                //                                 ) : (
-                //                                     <p>{test.content2[index]}</p>
-
-                //                                 )}
-                //                             </div>
-
-
-                //                         )
-                //                     })}
-
-
-                //                     {}</h1></p>)
-                //         )
-                //     }
-                // )
-              
-              
-                
-
             default:
                 return "neutral"
         }
@@ -299,7 +269,7 @@ export default function EditTest() {
             </Col>
             </div>
 
-            <button className="w-25" onClick={handleNextClick}>Next</button>
+            {(test.questions && (currentQuestion+1) == test.questions.length) ? <Button variant="success" size="lg" onClick={handleNextClick}>Zakończ</Button> : <Button variant="info" size="lg" onClick={handleNextClick}>Dalej</Button>}
 
         </div>
 

@@ -27,12 +27,6 @@ import jwt_decode from "jwt-decode";
 function App() {
 	const user = localStorage.getItem("token");
 
-	// try{
-	// 	const decoded = jwt_decode(user);
-	// }catch(error){
-	// 	console.log(error);
-	// }
-
 	const[loggedUser, setLoggedUser] = useState([])
 		useEffect(() => {
 			async function getUser() {

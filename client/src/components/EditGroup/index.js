@@ -170,31 +170,55 @@ const EditGroup = () => {
                 <Form.Select onChange={handleUserChange}>
                     <option>Wybierz osobę</option>
 
-                    
 
-                    {/* show all users but not in group */}
-                    {users && Array.from(users).map(user => {
+
+                    {group.peoples && Array.from(group.peoples).map(group => {
                         return(
                             <>
-                            {group.peoples && Array.from(group.peoples).map((group,index) => {
-                              
-                             
-                                return(
-                                    <>
-                                {group._id.includes(user._id) ?(
-                                    <option key={index} value={user._id} disabled>{user.firstName} {user.lastName}</option>
-                                )
-                                :
-                                (
-                                    <option key={index} value={user._id}>{user.firstName} {user.lastName}</option>
-                                )
+                                {users && Array.from(users).map((user,index) => {
+                                    return(
+                                        <>
+                                            {group._id.includes(user._id) ?(
+                                                <option key={index} value={user._id} disabled>{user.firstName} {user.lastName}</option>
+                                            ) :
+                                                (
+                                                    <option key={index} value={user._id}>{user.firstName} {user.lastName}</option>
+                                                )
+                                            }
+                                        </>
+                                    )
+                                })
                                 }
-                                </>
-                                )
-                            })}
+
                             </>
                         )
-                    })}
+                    })
+                    }
+
+
+                    {/* show all users but not in group */}
+                    {/*{users && Array.from(users).map(user => {*/}
+                    {/*    return(*/}
+                    {/*        <>*/}
+                    {/*        {group.peoples && Array.from(group.peoples).map((group,index) => {*/}
+                    {/*          */}
+                    {/*         */}
+                    {/*            return(*/}
+                    {/*                <>*/}
+                    {/*            {group._id.includes(user._id) ?(*/}
+                    {/*                <option key={index} value={user._id} disabled>{user.firstName} {user.lastName}</option>*/}
+                    {/*            )*/}
+                    {/*            :*/}
+                    {/*            (*/}
+                    {/*                <option key={index} value={user._id}>{user.firstName} {user.lastName}</option>*/}
+                    {/*            )*/}
+                    {/*            }*/}
+                    {/*            </>*/}
+                    {/*            )*/}
+                    {/*        })}*/}
+                    {/*        </>*/}
+                    {/*    )*/}
+                    {/*})}*/}
 
                     
 
