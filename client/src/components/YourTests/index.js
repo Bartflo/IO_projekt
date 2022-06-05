@@ -1,23 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Table from 'react-bootstrap/Table'
-const Record = (props) => (
- <tr>
-   <td>{props.record.name}</td>
-    <td>
-      <Link className="btn_edit" to={`/test_solve/${props.record._id}`}>Rozwiąż</Link>
-    
+import jwt_decode from "jwt-decode";
 
-   </td>
-       
- </tr>
-);
- 
+
 export default function YourTests() {
  const [records, setRecords] = useState([]);
  const [groups,setGroups] = useState([]);
- 
- // This method fetches the records from the database.
+
+ const user = localStorage.getItem("token");
+    const[loggedUser, setLoggedUser] = useState([])
+    useEffect(() => {
+        async function getUser() {
+            try
+            {
+                const decoded = jwt_decode(user);
+                const id = decoded._id
+                const response = await fetch(`http://localhost:8080/api/auth/${id}`);
+
+                if (!response.ok) {
+                    const message = `An error occurred: ${response.statusText}`;
+                    window.alert(message);
+                    return;
+                }
+                const actualUser = await response.json();
+
+                setLoggedUser(actualUser);
+            }catch(error)
+            {
+                console.log(error);
+            }
+        }
+
+
+        getUser();
+        return;
+    },[]);
+
+    // This method fetches the records from the database.
  useEffect(() => {
    async function getRecords() {
      const response = await fetch(`http://localhost:8080/api/testslist`);
@@ -56,17 +76,9 @@ export default function YourTests() {
   return;
 }, [groups.length]);
 
- // This method will map out the records on the table
- function recordList() {
-   return records.map((record) => {
-     return (
-       <Record
-         record={record}
-       
-         key={record._id}
-       />
-     );
-   });
+ if(records.length != 0)
+ {
+     console.log(records[0].group)
  }
 
  // This following section will display the table with the records of individuals.
@@ -80,7 +92,36 @@ export default function YourTests() {
            <th>Akcja</th>
          </tr>
        </thead>
-       <tbody>{recordList()}</tbody>
+       <tbody>
+       {records.map((record,index) => {
+            return(
+                <>
+
+               {record.group.map((group,index) => {
+                   {console.log(group.peoples)}
+                   {console.log(JSON.stringify(loggedUser._id))}
+                   if(group.peoples.includes(loggedUser._id)) {
+                       return (
+                           <tr key={index}>
+                               {/*<p>gowno</p>*/}
+                               <td>{record.name}</td>
+                               <td><Link className="btn_edit" to={`/test_solve/${record._id}`}>Otwórz</Link></td>
+                           </tr>
+                       )
+                   }
+               })}
+
+               </>
+            )
+                // <tr key={index}>
+                //     <td>{record.name}</td>
+                //     <td>
+                //         <Link className="btn_edit" to={`/test_solve/${record._id}`}>Rozwiąż</Link>
+                //     </td>
+                // </tr>
+
+       })}
+       </tbody>
      </Table>
    </div>
  );
