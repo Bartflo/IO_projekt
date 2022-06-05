@@ -37,7 +37,6 @@ export default function YourTests() {
         return;
     },[]);
 
-    // This method fetches the records from the database.
  useEffect(() => {
    async function getRecords() {
      const response = await fetch(`http://localhost:8080/api/testslist`);
@@ -81,7 +80,6 @@ export default function YourTests() {
      console.log(records[0].group)
  }
 
- // This following section will display the table with the records of individuals.
  return (
    
    <div>
@@ -103,22 +101,14 @@ export default function YourTests() {
                    if(group.peoples.includes(loggedUser._id)) {
                        return (
                            <tr key={index}>
-                               {/*<p>gowno</p>*/}
                                <td>{record.name}</td>
                                <td><Link className="btn_edit" to={`/test_solve/${record._id}`}>Otwórz</Link></td>
                            </tr>
                        )
                    }
                })}
-
                </>
             )
-                // <tr key={index}>
-                //     <td>{record.name}</td>
-                //     <td>
-                //         <Link className="btn_edit" to={`/test_solve/${record._id}`}>Rozwiąż</Link>
-                //     </td>
-                // </tr>
 
        })}
        </tbody>
