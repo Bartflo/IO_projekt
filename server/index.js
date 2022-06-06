@@ -10,6 +10,7 @@ const recordListRoutes = require("./routes/edit_questions");
 const testRoutes = require("./routes/test");
 const testsListRoutes = require("./routes/testslist");
 const groupRoutes = require("./routes/groups");
+const testSolve = require("./routes/test_solve");
 // database connection
 connection();
 
@@ -19,6 +20,7 @@ app.use(cors());
 
 // routes
 app.use("/api/users", userRoutes);
+app.use("api/test_solve", testSolve);
 app.use("/api/auth", authRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/test", testRoutes);

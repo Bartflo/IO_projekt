@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+
 const EditGroup = () => {
 
     const [users,setUsers] = useState([]);
@@ -15,6 +16,7 @@ const EditGroup = () => {
         peoples:"",
     });
     const params = useParams();
+    
 
     useEffect(() => {
         async function getUsers() {
@@ -53,11 +55,10 @@ const EditGroup = () => {
 
         getGroup();
         return;
-    }, );
+    },);
 
     const handleUserChange = ({ currentTarget: input  }) => {
         setData(data=>({ ...data, peoples:input.value}));
-        console.log(data.peoples);
     };
 
     const handleSubmit = async (e) => {
@@ -88,7 +89,6 @@ const EditGroup = () => {
             .catch(err => {
                 window.alert(`An error has occurred: ${err.message}`);
             });
-        console.log(data);
     };
 
  //remove user from array of users using /api/group/pull/:id/:user
@@ -115,20 +115,21 @@ const EditGroup = () => {
             })
             .then(submitData => {
                 window.alert(`Użytkownik ${user} usunięty z grupy ${id}`);
-                // window.location.reload(false);
             })
             .catch(err => {
                 window.alert(`An error has occurred: ${err.message}`);
             });
-        console.log(data);
     };
 
 
-
+    
         
 
     return(
     <div>
+
+        
+        
         <Row className="justify-content-md-center" xs="auto" style={{marginTop:"2rem"}}>
         <Col>
             <h3>Użytkownicy w grupie</h3>
@@ -165,29 +166,31 @@ const EditGroup = () => {
                 <Form.Select onChange={handleUserChange}>
                     <option>Wybierz osobę</option>
 
-                    
-
-                    {/* show all users but not in group */}
-                    {users && Array.from(users).map(user => (
-                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
-                    ))}
 
 
-
-
-                    
-                    {/* {users.map(user=>{
+                    {group.peoples && Array.from(group.peoples).map(group => {
                         return(
-                        group.peoples && (user._id not in group.peoples) &&	
-                        <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
+                            <>
+                                {users && Array.from(users).map((user,index) => {
+                                    return(
+                                        <>
+                                            {group._id.includes(user._id) ?(
+                                                <option key={index} value={user._id} disabled>{user.firstName} {user.lastName}</option>
+                                            ) :
+                                                (
+                                                    <option key={index} value={user._id}>{user.firstName} {user.lastName}</option>
+                                                )
+                                            }
+                                        </>
+                                    )
+                                })
+                                }
+
+                            </>
                         )
-                    })} */}
+                    })
+                    }
                     </Form.Select>
-                {/* <datalist id="users">
-                    {users.map(user => (
-                        <option key={user.id} value={user.id}>{user._id}</option>
-                    ))}
-                </datalist> */}
                 <Button variant="primary" onClick={handleSubmit} style={{marginTop:"20px"}}>Dodaj</Button>
         </Col>
         </Row>

@@ -1,7 +1,7 @@
-import React, { Component }  from 'react';
+import React, {Component, useEffect,useState} from 'react';
 
 import { Route, Routes, Navigate } from "react-router-dom";
-import Main from "./components/Main/index";
+import CreateTest from "./components/CreateTest/index";
 import Signup from "./components/Singup/index";
 import Login from "./components/Login/index";
 import Questions from "./components/Questions/index";
@@ -13,22 +13,55 @@ import EditQuestions_2 from "./components/EditQuestions_2/index";
 import EditQuestions_3 from "./components/EditQuestions_3/index";
 import EditTest from "./components/EditTest/index";
 import Testslist from "./components/Tests/index";
-import Navbar from "./components/Navbar/index";
+import NavbarAdmin from "./components/NavbarAdmin/index";
+import NavbarUser from "./components/Navbar/index";
 import CreateGroup from "./components/CreateGroup/index";
-import GroupList from ".//components/GroupList/index";
+import GroupList from "./components/GroupList/index";
 import EditGroup from "./components/EditGroup/index";
+import TestSolve from "./components/SolveTest/index";
+import YourTests from "./components/YourTests/index";
+import Main from "./components/Main/index";
 import "./App.css";
-
+import jwt_decode from "jwt-decode";
 
 
 function App() {
 	const user = localStorage.getItem("token");
 
+	const[loggedUser, setLoggedUser] = useState([])
+		useEffect(() => {
+			async function getUser() {
+				try
+				{
+					const decoded = jwt_decode(user);
+					const id = decoded._id
+					const response = await fetch(`http://localhost:8080/api/auth/${id}`);
+
+					if (!response.ok) {
+						const message = `An error occurred: ${response.statusText}`;
+						window.alert(message);
+						return;
+					}
+					const actualUser = await response.json();
+
+					setLoggedUser(actualUser);
+				}catch(error)
+				{
+					console.log(error);
+				}
+				}
+
+
+			getUser();
+			return;
+		},[]);
+
 	return (
-		<div>
-		{user && <Navbar/>}
+	<div>
+		{loggedUser.isAdmin ? <NavbarAdmin/> : (user && <NavbarUser/>)}
 		<Routes>
 			{user && <Route path="/" exact element={<Main />} />}
+			{user && <Route path="/create_test" exact element={<CreateTest />} />}
 			{user && <Route path="/questions" exact element={<Questions/>}/>}
 			{user && <Route path="/questions2" exact element={<Questions2/>}/>}
 			{user && <Route path="/questions3" exact element={<Questions3/>}/>}
@@ -41,7 +74,8 @@ function App() {
 			{user && <Route path="/create_group" element={<CreateGroup/>}/>}
 			{user && <Route path="/group_list" element={<GroupList/>}/>}
 			{user && <Route path="/edit_group/:id" element={<EditGroup/>}/>}
-
+			{user && <Route path="/your_tests" exact element={<YourTests/>}/>}
+			{user && <Route path="/test_solve/:id" exact element={<TestSolve/>}/>}
 
 
 			<Route path="/signup" exact element={<Signup />} />

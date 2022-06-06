@@ -1,0 +1,24 @@
+
+  
+  .list {
+    user-select: none;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .item {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(84, 84, 241);
+    color: white;
+    margin: 8px;
+    width: 60px;
+    height: 60px;
+    cursor: grab;
+  }
+  
+  .dragged {
+    background-color: rgb(37, 37, 197);
+  }

@@ -27,6 +27,25 @@ router.post("/", async (req, res) => {
 	}
 });
 
+router.get("/:id", async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id);
+		if (!user) {
+			return res.status(404).send({ message: "User not found" });
+		}
+		res.send(user);
+	} catch (error) {
+		console.error(error);
+		if (error.name === "CastError") {
+			return res.status(404).send({ message: "User not found" });
+		}
+		res.status(500).send({ message: "Internal Server Error" });
+	}
+});
+
+
+
+
 const validate = (data) => {
 	const schema = Joi.object({
 		email: Joi.string().email().required().label("Email"),

@@ -81,7 +81,6 @@ const [data, setData] = useState({
  return (
    <div className="main_container">
      <div className="centered">
-    {console.log(form.content2)}
      <form onSubmit={handleSubmit} className="form_questions">
          <label htmlFor="name">Treść pytania: </label>
          <input
