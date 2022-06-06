@@ -31,6 +31,7 @@ const Navigation_bar = () => {
             </NavDropdown>
             <NavDropdown title="Stwórz" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="/create_group" style={{textDecoration:"none",color:"inherit"}}>Grupa</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/create_test" style={{textDecoration:"none",color:"inherit"}}>Test</Link></NavDropdown.Item>
 
             </NavDropdown>
             </Nav>
@@ -45,15 +46,6 @@ const Navigation_bar = () => {
         </Container>
         </Navbar>
 
-        // <nav className="navbar">
-        // <Link to="/" className="logo">Aplikacja</Link>
-        // <Link to="/recordlist" className="btn_logout">Lista rekordków</Link>
-        // <Link to="/testslist" className="btn_logout">Lista testów</Link>        
-        //     <Link to="/questions" className="btn_logout">Dodaj pytanie zamknięte</Link>
-        //     <Link to="/questions3" className="btn_logout">Dodaj pytanie wypełnianie</Link>
-        //     <Link to="/questions2" className="btn_logout">Dodaj pytanie kolejność</Link>
-            
-        // </nav>
     );
 };
 

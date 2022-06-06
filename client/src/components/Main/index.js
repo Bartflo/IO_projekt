@@ -1,68 +1,49 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useState } from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
-import styles from "./styles.css"
+import jwt_decode from "jwt-decode";
 
 const Main = () => {
-	
-	const [data, setData] = useState({
-		name: "",
-		questions: [],
-		questions2: [],
-		questions3: [],
 
-	});
-	
-	const handleQuestionChange = ({ currentTarget: input  }) => {
-		setData(data=>({ ...data, name:input.value }));
-	};
+    const user = localStorage.getItem("token");
 
-	const [error, setError] = useState("");
-	
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const url = "http://localhost:8080/api/test";
-			const { data: res } = await axios.post(url, {
-				name:data.name,
-			});
-			window.location.reload(false);
-			console.log(res.message);
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setError(error.response.data.message);
-			}
-		}
-	};
-	
+    const[loggedUser, setLoggedUser] = useState([])
+    useEffect(() => {
+        async function getUser() {
+            try
+            {
+                const decoded = jwt_decode(user);
+                const id = decoded._id
+                const response = await fetch(`http://localhost:8080/api/auth/${id}`);
 
-	return (
-		<div className="main_container">
-			
-			<div className="centered">
-			
-			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
-			<h2>Wpisz nazwę testu</h2>
-			  <input className="login_register_input"
-					  	type="text"
-					  	placeholder="Nazwa testu"
-					  	name="name"
-	  					onChange={handleQuestionChange}
-						required
-					  />
-				
-				<button type="submit" className="btn_login_register">
-				  Utwórz test
-				  </button>
-			 </form>
-		</div>
-		</div>
-	);
+                if (!response.ok) {
+                    const message = `An error occurred: ${response.statusText}`;
+                    window.alert(message);
+                    return;
+                }
+                const actualUser = await response.json();
+
+                setLoggedUser(actualUser);
+            }catch(error)
+            {
+                console.log(error);
+            }
+        }
+
+
+        getUser();
+        return;
+    },[]);
+
+
+    return (
+        <div className="main_container">
+
+            <div className="centered">
+                <p>{`Witaj ${loggedUser.firstName} ${loggedUser.lastName}`}</p>
+            </div>
+        </div>
+    );
 };
 
 export default Main;

@@ -64,7 +64,6 @@ const Questions3 = () => {
         	{Array.from(data.content2).map((subArray, index) => {
           return (
             <div key={index} className="showing_buttons">
-				{console.log(data.content2)}
 					<div key={index} className="correctAnswer_container action">
 						<label>
 							<input type="checkbox" key={index} value={index} name={data.content2[index]} onChange={handleCorrectAnswerChange}/><span>{data.content2[index]}</span>

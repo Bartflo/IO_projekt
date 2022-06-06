@@ -1,27 +1,31 @@
 import React from 'react'
 import { useState } from "react";
 import axios from "axios";
-const Questions2 = () => {
+import {Link} from "react-router-dom";
+import styles from "./styles.css"
+
+const Main = () => {
+	
 	const [data, setData] = useState({
-		content2: "",
-		type:2,
+		name: "",
+		questions: [],
+		questions2: [],
+		questions3: [],
+
 	});
 	
-    const [error, setError] = useState("");
-	
-    const handleQuestionChange = ({ currentTarget: input  }) => {
-		setData(data=>({ ...data, content2:input.value.split(" ") }));
+	const handleQuestionChange = ({ currentTarget: input  }) => {
+		setData(data=>({ ...data, name:input.value }));
 	};
-	
- 
+
+	const [error, setError] = useState("");
 	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/questions";
+			const url = "http://localhost:8080/api/test";
 			const { data: res } = await axios.post(url, {
-				content2:data.content2,
-				type:data.type,
+				name:data.name,
 			});
 			window.location.reload(false);
 			console.log(res.message);
@@ -36,24 +40,24 @@ const Questions2 = () => {
 		}
 	};
 	
-	
+
 	return (
 		<div className="main_container">
-
+			
 			<div className="centered">
 			
-			<form onSubmit={handleSubmit} className="form_questions"> 
-			<h2>Wpisz zapytanie</h2>
+			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
+			<h2>Wpisz nazwę testu</h2>
 			  <input className="login_register_input"
 					  	type="text"
-					  	placeholder="Treść pytania"
-					  	name="content2"
+					  	placeholder="Nazwa testu"
+					  	name="name"
 	  					onChange={handleQuestionChange}
 						required
 					  />
 				
 				<button type="submit" className="btn_login_register">
-				  Dodaj pytanie do bazy
+				  Utwórz test
 				  </button>
 			 </form>
 		</div>
@@ -61,4 +65,4 @@ const Questions2 = () => {
 	);
 };
 
-export default Questions2;
+export default Main;

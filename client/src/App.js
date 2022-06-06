@@ -1,7 +1,7 @@
 import React, {Component, useEffect,useState} from 'react';
 
 import { Route, Routes, Navigate } from "react-router-dom";
-import Main from "./components/Main/index";
+import CreateTest from "./components/CreateTest/index";
 import Signup from "./components/Singup/index";
 import Login from "./components/Login/index";
 import Questions from "./components/Questions/index";
@@ -20,6 +20,7 @@ import GroupList from "./components/GroupList/index";
 import EditGroup from "./components/EditGroup/index";
 import TestSolve from "./components/SolveTest/index";
 import YourTests from "./components/YourTests/index";
+import Main from "./components/Main/index";
 import "./App.css";
 import jwt_decode from "jwt-decode";
 
@@ -60,21 +61,21 @@ function App() {
 		{loggedUser.isAdmin ? <NavbarAdmin/> : (user && <NavbarUser/>)}
 		<Routes>
 			{user && <Route path="/" exact element={<Main />} />}
-			{(loggedUser.isAdmin === true) && <Route path="/questions" exact element={<Questions/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/questions2" exact element={<Questions2/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/questions3" exact element={<Questions3/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/recordlist" exact element={<RecordList/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/edit_1/:id" element={<EditQuestions_1/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/edit_2/:id" element={<EditQuestions_2/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/edit_3/:id" element={<EditQuestions_3/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/testslist" element={<Testslist/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/edittest/:id" element={<EditTest/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/create_group" element={<CreateGroup/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/group_list" element={<GroupList/>}/>}
-			{(loggedUser.isAdmin === true) && <Route path="/edit_group/:id" element={<EditGroup/>}/>}
+			{user && <Route path="/create_test" exact element={<CreateTest />} />}
+			{user && <Route path="/questions" exact element={<Questions/>}/>}
+			{user && <Route path="/questions2" exact element={<Questions2/>}/>}
+			{user && <Route path="/questions3" exact element={<Questions3/>}/>}
+			{user && <Route path="/recordlist" exact element={<RecordList/>}/>}
+			{user && <Route path="/edit_1/:id" element={<EditQuestions_1/>}/>}
+			{user && <Route path="/edit_2/:id" element={<EditQuestions_2/>}/>}
+			{user && <Route path="/edit_3/:id" element={<EditQuestions_3/>}/>}
+			{user && <Route path="/testslist" element={<Testslist/>}/>}
+			{user && <Route path="/edittest/:id" element={<EditTest/>}/>}
+			{user && <Route path="/create_group" element={<CreateGroup/>}/>}
+			{user && <Route path="/group_list" element={<GroupList/>}/>}
+			{user && <Route path="/edit_group/:id" element={<EditGroup/>}/>}
 			{user && <Route path="/your_tests" exact element={<YourTests/>}/>}
 			{user && <Route path="/test_solve/:id" exact element={<TestSolve/>}/>}
-			{console.log(loggedUser.isAdmin)};
 
 
 			<Route path="/signup" exact element={<Signup />} />

@@ -17,8 +17,7 @@ const Questions = () => {
 
 	const handleQuestionChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data, content:input.value }));
-		console.log(data.content)
-	};	
+	};
 	
 	const handleCorrectAnswerChange = ({ currentTarget: input }) => {
 		setData(data=>({ ...data,  correctAnswer:data.correctAnswer.set(input.name,input.value)}));
@@ -82,8 +81,7 @@ const Questions = () => {
 			
 			<div className="centered">
 			
-			{/* {console.log(questions)} */}
-			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'> 
+			<form onSubmit={handleSubmit} className="form_questions" autoComplete='off'>
 			<h2>Zaznacz prawidłowa odpowiedz</h2>
 			  <input className="login_register_input"
 					  	type="text"

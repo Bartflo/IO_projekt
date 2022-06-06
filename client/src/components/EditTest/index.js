@@ -56,7 +56,6 @@ const TestsRecord = (props) => (
    
     const handleQuestionChange = ({ currentTarget: input }) => {
       setData(data=>({ ...data,  questions:data.questions.set(input.name,input.value)}));
-    console.log(data.questions)
 
 };
   const [pass, setPass] = useState({
@@ -291,7 +290,6 @@ const TestsRecord = (props) => (
 
     const handleGroupChange = ({ currentTarget: input }) => {
       setGroupChange(groupChange=>({ ...groupChange, group:input.value}));
-      console.log(groupChange.group)
   };
 
 

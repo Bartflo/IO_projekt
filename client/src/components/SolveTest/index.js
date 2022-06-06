@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 
 export default function EditTest() {
 
-    
+    const navigate = useNavigate()
 
     const [test, setTest] = useState({
         name: ""
@@ -133,6 +133,7 @@ export default function EditTest() {
             setCurrentQuestion(nextQuetions);
      }
     else{
+        navigate('/your_tests')
         if(points>=test.passing){
             alert(`You have Passed the test. You got ${points} points out of ${test.questions.length}`)
         }

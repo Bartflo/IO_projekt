@@ -116,7 +116,6 @@ const handleCorrectAnswerChange = ({ currentTarget: input }) => {
            onChange={handleQuestionChange}
          />
          <h1>Odpowiedzi</h1>
-         {console.log(questions)}
        {Array.from(form.answer).map((question , index) => (
 				<div key={index}>
 				<input className="login_register_input"
