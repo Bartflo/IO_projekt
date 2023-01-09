@@ -1,18 +1,27 @@
 # IO_projekt
 
-## **[Opis projektu](https://github.com/Bartflo/IO_projekt/wiki)**
+## **[Description](https://github.com/Bartflo/IO_projekt/wiki)**
 
-## Instalacja
+## Installation
 ```
 cd client/ && npm install
 cd server/ && npm install
 ```
+### Also you have to add your own `.env` file with config to connect mongo, which should be in `\server` folder
+Template `.env`
+```
+uri= <your_connect_uri_to_mongo>
+jwtkey = <your_random_jwtkey>
+```
 
-## Uruchomienie servera(back-end)
+
+
+### You should start backend and frontend at the same time in two different terminals
+## Run server(back-end)
 ```
 cd server/ && npm start
 ```
-## Uruchomienie klienta(front-end)
+## Run client(front-end)
 ```
 cd client/ && npm start
 ```
